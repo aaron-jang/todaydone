@@ -1,0 +1,11 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 -->
+  <rect width="512" height="512" fill="#2563eb" rx="80"/>
+
+  <!-- 체크 원 -->
+  <circle cx="256" cy="200" r="80" fill="#ffffff" opacity="0.9"/>
+  <path d="M 220 200 L 245 225 L 292 175" stroke="#2563eb" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- 텍스트 -->
+  <text x="256" y="380" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="#ffffff" text-anchor="middle">루틴</text>
+</svg>
