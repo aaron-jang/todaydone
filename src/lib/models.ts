@@ -1,5 +1,14 @@
+export interface User {
+  id: string;
+  name: string;
+  emoji: string;
+  sortOrder: number;
+  createdAt: string;
+}
+
 export interface Routine {
   id: string;
+  userId: string;
   title: string;
   isActive: boolean;
   sortOrder: number;
@@ -11,6 +20,7 @@ export interface Routine {
 export interface DailyLog {
   date: string;
   routineId: string;
+  userId: string;
   done: boolean;
   updatedAt: string;
   spentMinutes?: number;
