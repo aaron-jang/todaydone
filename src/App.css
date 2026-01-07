@@ -1010,64 +1010,6 @@ button:active {
   padding: 2rem;
 }
 
-/* User Select */
-.user-select-subtitle {
-  text-align: center;
-  font-size: 1.1rem;
-  color: #6b7280;
-  margin-bottom: 2rem;
-  font-weight: 600;
-}
-
-.user-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.user-card {
-  background: #fff;
-  border: 3px solid #e9ecef;
-  border-radius: 16px;
-  padding: 2rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.user-card:hover {
-  transform: translateY(-4px);
-  border-color: #2563eb;
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2);
-}
-
-.user-card:active {
-  transform: translateY(-2px);
-}
-
-.user-emoji {
-  font-size: 3.5rem;
-  line-height: 1;
-}
-
-.user-name {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-}
-
-.add-user-button {
-  width: 100%;
-  padding: 1.25rem;
-  font-size: 1.2rem;
-  margin-top: 1rem;
-}
-
 /* Create User Form */
 .create-user-form {
   background: #fff;
@@ -1152,16 +1094,8 @@ button:active {
 }
 
 @media (max-width: 640px) {
-  .user-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .emoji-selector {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .user-emoji {
-    font-size: 3rem;
   }
 
   .emoji-option {

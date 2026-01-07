@@ -7,7 +7,15 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+      includeAssets: [
+        'favicon-16x16.png',
+        'favicon-32x32.png',
+        'apple-touch-icon.png',
+        'icon-192x192.png',
+        'icon-512x512.png',
+        'icon.png',
+        'opengraph.png'
+      ],
       manifest: {
         name: '우리 가족 루틴',
         short_name: '루틴',
@@ -16,24 +24,26 @@ export default defineConfig({
         background_color: '#f8f9fa',
         display: 'standalone',
         orientation: 'portrait',
-        scope: '/todaydone/',
-        start_url: '/todaydone/',
+        scope: '/',
+        start_url: '/',
         icons: [
           {
-            src: '/todaydone/icon-192x192.png',
+            src: '/icon-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
-            src: '/todaydone/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          },
-          {
-            src: '/todaydone/icon-512x512.png',
+            src: '/icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable'
+            purpose: 'any'
+          },
+          {
+            src: '/icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ]
       },
@@ -58,5 +68,5 @@ export default defineConfig({
       }
     })
   ],
-  base: process.env.NODE_ENV === 'production' ? '/todaydone/' : '/',
+  base: '/',
 })

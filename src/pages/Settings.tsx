@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { exportData, importData, resetDatabase, getAllUsers, getCurrentUserId, updateUser, deleteUser, moveUserUp, moveUserDown } from '../lib/db';
+import { exportData, importData, resetDatabase, getAllUsers, createUser, updateUser, deleteUser, moveUserUp, moveUserDown } from '../lib/db';
 import { User } from '../lib/models';
 
 export default function Settings() {
   const [users, setUsers] = useState<User[]>([]);
-  const [currentUserId, setCurrentUserIdState] = useState<string | null>(null);
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
   const [editEmoji, setEditEmoji] = useState('');
-  const navigate = useNavigate();
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [newEmoji, setNewEmoji] = useState('😊');
 
   const emojiOptions = ['😊', '😄', '🥰', '😎', '🤓', '👶', '👧', '🧒', '👦', '👨', '👩', '🧑'];
 
@@ -20,7 +20,6 @@ export default function Settings() {
   async function loadUsers() {
     const allUsers = await getAllUsers();
     setUsers(allUsers);
-    setCurrentUserIdState(getCurrentUserId());
   }
 
   function startEdit(user: User) {
@@ -69,6 +68,22 @@ export default function Settings() {
   async function handleMoveUserDown(userId: string) {
     await moveUserDown(userId);
     await loadUsers();
+  }
+
+  async function handleCreateUser() {
+    if (!newName.trim()) return;
+
+    await createUser(newName.trim(), newEmoji);
+    setNewName('');
+    setNewEmoji('😊');
+    setShowCreateForm(false);
+    await loadUsers();
+  }
+
+  function cancelCreate() {
+    setNewName('');
+    setNewEmoji('😊');
+    setShowCreateForm(false);
   }
   async function handleExport() {
     try {
@@ -125,9 +140,6 @@ export default function Settings() {
     }
   }
 
-  function handleManageUsers() {
-    navigate('/user-select');
-  }
 
   return (
     <div className="container">
@@ -199,9 +211,6 @@ export default function Settings() {
                   </div>
                   <span className="user-info-emoji">{user.emoji}</span>
                   <span className="user-info-name">{user.name}</span>
-                  {user.id === currentUserId && (
-                    <span className="current-user-badge">현재</span>
-                  )}
                   <div className="user-card-actions">
                     <button onClick={() => startEdit(user)} className="btn-edit">
                       ✏️ 수정
@@ -216,9 +225,58 @@ export default function Settings() {
           ))}
         </div>
 
-        <button onClick={handleManageUsers} className="btn-primary" style={{ width: '100%', marginTop: '1rem' }}>
-          ➕ 가족 추가하기
-        </button>
+        {!showCreateForm && (
+          <button onClick={() => setShowCreateForm(true)} className="btn-primary" style={{ width: '100%', marginTop: '1rem' }}>
+            ➕ 가족 추가하기
+          </button>
+        )}
+
+        {showCreateForm && (
+          <div className="create-user-form" style={{ marginTop: '1rem' }}>
+            <h3>새 가족 추가하기</h3>
+
+            <div className="form-group">
+              <label>이름</label>
+              <input
+                type="text"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder="이름을 입력하세요 (예: 엄마, 수아)"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleCreateUser();
+                  }
+                }}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>이모지 선택</label>
+              <div className="emoji-selector">
+                {emojiOptions.map((emoji) => (
+                  <button
+                    key={emoji}
+                    type="button"
+                    className={`emoji-option ${newEmoji === emoji ? 'selected' : ''}`}
+                    onClick={() => setNewEmoji(emoji)}
+                  >
+                    {emoji}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="form-buttons">
+              <button type="button" className="btn-primary" onClick={handleCreateUser}>
+                ✅ 완료
+              </button>
+              <button type="button" className="btn-secondary" onClick={cancelCreate}>
+                취소
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="settings-section" style={{ marginTop: '1.5rem' }}>

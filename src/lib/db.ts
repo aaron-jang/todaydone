@@ -48,9 +48,6 @@ export class DailyLoopDatabase extends Dexie {
           userId: defaultUser.id
         });
       }
-
-      // Set as current user
-      localStorage.setItem('currentUserId', defaultUser.id);
     });
 
     // Version 3: Add sortOrder to users
@@ -73,20 +70,6 @@ export class DailyLoopDatabase extends Dexie {
 export const db = new DailyLoopDatabase();
 
 // User management
-export function getCurrentUserId(): string | null {
-  return localStorage.getItem('currentUserId');
-}
-
-export function setCurrentUserId(userId: string): void {
-  localStorage.setItem('currentUserId', userId);
-}
-
-export async function getCurrentUser(): Promise<User | undefined> {
-  const userId = getCurrentUserId();
-  if (!userId) return undefined;
-  return await db.users.get(userId);
-}
-
 export async function createUser(name: string, emoji: string): Promise<User> {
   const users = await db.users.toArray();
   const maxSortOrder = users.length > 0 ? Math.max(...users.map(u => u.sortOrder)) : -1;
@@ -128,11 +111,6 @@ export async function deleteUser(userId: string): Promise<void> {
 
     // Delete user
     await db.users.delete(userId);
-
-    // Clear current user if it was the deleted user
-    if (getCurrentUserId() === userId) {
-      localStorage.removeItem('currentUserId');
-    }
   });
 }
 
@@ -187,10 +165,6 @@ export async function importData(jsonString: string): Promise<void> {
 
       if (data.users && Array.isArray(data.users)) {
         await db.users.bulkAdd(data.users);
-        // Set first user as current user if exists
-        if (data.users.length > 0) {
-          localStorage.setItem('currentUserId', data.users[0].id);
-        }
       }
 
       if (data.routines && Array.isArray(data.routines)) {
@@ -212,7 +186,6 @@ export async function resetDatabase(): Promise<void> {
     await db.users.clear();
     await db.routines.clear();
     await db.dailyLogs.clear();
-    localStorage.removeItem('currentUserId');
   });
 }
 
