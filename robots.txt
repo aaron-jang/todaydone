@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://todaydone.soosoo.life/sitemap.xml
+Sitemap: https://soosoo.life/todaydone/sitemap.xml
