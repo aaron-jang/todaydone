@@ -11,6 +11,8 @@ import {
   getNotificationMessage,
   markNotificationShown,
   scheduleNotificationCheck,
+  requestNotificationPermission,
+  saveNotificationSettings,
 } from './lib/notifications';
 import './App.css';
 
@@ -28,6 +30,23 @@ function App() {
     }
 
     // Initialize notification scheduler
+    const initializeNotifications = async () => {
+      const settings = getNotificationSettings();
+
+      // If notifications are not configured yet, request permission and enable by default
+      if (!settings.enabled && Notification.permission === 'default') {
+        const granted = await requestNotificationPermission();
+        if (granted) {
+          const newSettings = {
+            enabled: true,
+            time: '08:00',
+            lastNotified: null,
+          };
+          saveNotificationSettings(newSettings);
+        }
+      }
+    };
+
     const checkNotification = () => {
       const settings = getNotificationSettings();
       if (shouldShowNotification(settings)) {
@@ -36,6 +55,9 @@ function App() {
         markNotificationShown();
       }
     };
+
+    // Initialize notifications on first load
+    initializeNotifications();
 
     // Check immediately on load
     checkNotification();
