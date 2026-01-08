@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { exportData, importData, resetDatabase, getAllUsers, createUser, updateUser, deleteUser, moveUserUp, moveUserDown } from '../lib/db';
 import { User } from '../lib/models';
+import {
+  getNotificationSettings,
+  saveNotificationSettings,
+  requestNotificationPermission,
+  type NotificationSettings
+} from '../lib/notifications';
 
 export default function Settings() {
   const [users, setUsers] = useState<User[]>([]);
@@ -10,12 +16,36 @@ export default function Settings() {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newName, setNewName] = useState('');
   const [newEmoji, setNewEmoji] = useState('😊');
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    if (saved !== null) return saved === 'true';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
+  const [notificationSettings, setNotificationSettings] = useState<NotificationSettings>(() =>
+    getNotificationSettings()
+  );
+  const [notificationPermission, setNotificationPermission] = useState<NotificationPermission>(
+    typeof Notification !== 'undefined' ? Notification.permission : 'default'
+  );
 
   const emojiOptions = ['😊', '😄', '🥰', '😎', '🤓', '👶', '👧', '🧒', '👦', '👨', '👩', '🧑'];
 
   useEffect(() => {
     loadUsers();
   }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark-mode');
+    }
+    localStorage.setItem('darkMode', String(darkMode));
+  }, [darkMode]);
+
+  function toggleDarkMode() {
+    setDarkMode(!darkMode);
+  }
 
   async function loadUsers() {
     const allUsers = await getAllUsers();
@@ -140,6 +170,32 @@ export default function Settings() {
     }
   }
 
+  async function handleToggleNotifications() {
+    if (!notificationSettings.enabled) {
+      // Enabling notifications - request permission first
+      const granted = await requestNotificationPermission();
+      if (granted) {
+        const newSettings = { ...notificationSettings, enabled: true };
+        setNotificationSettings(newSettings);
+        saveNotificationSettings(newSettings);
+        setNotificationPermission('granted');
+        alert('알림이 활성화되었어요! 매일 아침 8시에 알림을 받을 수 있어요 🔔');
+      } else {
+        alert('알림 권한이 필요해요. 브라우저 설정에서 알림을 허용해주세요.');
+      }
+    } else {
+      // Disabling notifications
+      const newSettings = { ...notificationSettings, enabled: false };
+      setNotificationSettings(newSettings);
+      saveNotificationSettings(newSettings);
+    }
+  }
+
+  function handleTimeChange(time: string) {
+    const newSettings = { ...notificationSettings, time };
+    setNotificationSettings(newSettings);
+    saveNotificationSettings(newSettings);
+  }
 
   return (
     <div className="container">
@@ -306,6 +362,81 @@ export default function Settings() {
           <p>
             <strong>🗑️ 삭제하기:</strong> 모든 루틴과 기록을 삭제해요. (되돌릴 수 없어요!)
           </p>
+        </div>
+      </div>
+
+      <div className="settings-section" style={{ marginTop: '1.5rem' }}>
+        <h2>🎨 테마 설정</h2>
+
+        <div className="dark-mode-toggle">
+          <div className="dark-mode-info">
+            <span className="dark-mode-label">{darkMode ? '🌙 다크모드' : '☀️ 라이트모드'}</span>
+            <p className="dark-mode-description">
+              {darkMode ? '어두운 배경으로 눈이 편안해요' : '밝은 배경으로 화면이 또렷해요'}
+            </p>
+          </div>
+          <button onClick={toggleDarkMode} className={`toggle-button ${darkMode ? 'active' : ''}`}>
+            <span className="toggle-slider"></span>
+          </button>
+        </div>
+      </div>
+
+      <div className="settings-section" style={{ marginTop: '1.5rem' }}>
+        <h2>🔔 알림 설정</h2>
+
+        <div className="notification-settings">
+          <div className="dark-mode-toggle">
+            <div className="dark-mode-info">
+              <span className="dark-mode-label">
+                {notificationSettings.enabled ? '🔔 알림 켜짐' : '🔕 알림 꺼짐'}
+              </span>
+              <p className="dark-mode-description">
+                {notificationSettings.enabled
+                  ? '매일 정해진 시간에 알림을 받아요'
+                  : '알림을 받지 않아요'}
+              </p>
+            </div>
+            <button
+              onClick={handleToggleNotifications}
+              className={`toggle-button ${notificationSettings.enabled ? 'active' : ''}`}
+              disabled={notificationPermission === 'denied'}
+            >
+              <span className="toggle-slider"></span>
+            </button>
+          </div>
+
+          {notificationSettings.enabled && (
+            <div className="notification-time-setting" style={{ marginTop: '1rem' }}>
+              <label htmlFor="notification-time" className="notification-time-label">
+                알림 시간 설정
+              </label>
+              <input
+                id="notification-time"
+                type="time"
+                value={notificationSettings.time}
+                onChange={(e) => handleTimeChange(e.target.value)}
+                className="notification-time-input"
+              />
+              <p className="notification-time-description">
+                매일 {notificationSettings.time}에 루틴 알림을 받아요
+              </p>
+            </div>
+          )}
+
+          {notificationPermission === 'denied' && (
+            <div className="notification-warning">
+              ⚠️ 알림이 차단되었어요. 브라우저 설정에서 알림을 허용해주세요.
+            </div>
+          )}
+
+          <div className="settings-info" style={{ marginTop: '1rem' }}>
+            <p>
+              <strong>💡 알림 안내:</strong> 웹 브라우저 알림으로 매일 정해진 시간에 루틴을 확인할 수 있어요.
+            </p>
+            <p>
+              <strong>📱 참고:</strong> 일부 브라우저에서는 앱이 닫혀있을 때 알림이 오지 않을 수 있어요.
+            </p>
+          </div>
         </div>
       </div>
     </div>
