@@ -31,34 +31,59 @@ export function saveNotificationSettings(settings: NotificationSettings): void {
 }
 
 export async function requestNotificationPermission(): Promise<boolean> {
-  if (!('Notification' in window)) {
-    console.warn('This browser does not support notifications');
+  try {
+    if (!('Notification' in window)) {
+      console.warn('This browser does not support notifications');
+      return false;
+    }
+
+    if (Notification.permission === 'granted') {
+      return true;
+    }
+
+    if (Notification.permission !== 'denied') {
+      const permission = await Notification.requestPermission();
+      return permission === 'granted';
+    }
+
+    return false;
+  } catch (error) {
+    console.error('Error requesting notification permission:', error);
     return false;
   }
-
-  if (Notification.permission === 'granted') {
-    return true;
-  }
-
-  if (Notification.permission !== 'denied') {
-    const permission = await Notification.requestPermission();
-    return permission === 'granted';
-  }
-
-  return false;
 }
 
-export function showNotification(title: string, body: string, icon?: string): void {
-  if (!('Notification' in window)) {
-    console.warn('This browser does not support notifications');
-    return;
-  }
+export async function showNotification(title: string, body: string, icon?: string): Promise<void> {
+  try {
+    if (!('Notification' in window)) {
+      console.warn('This browser does not support notifications');
+      return;
+    }
 
-  if (Notification.permission === 'granted') {
+    if (Notification.permission !== 'granted') {
+      return;
+    }
+
+    // Try to use Service Worker notification if available (for mobile/PWA)
+    if ('serviceWorker' in navigator) {
+      const registration = await navigator.serviceWorker.ready;
+      if (registration && registration.showNotification) {
+        await registration.showNotification(title, {
+          body,
+          icon: icon || '/todaydone/icon-192x192.png',
+          badge: '/todaydone/icon-192x192.png',
+          tag: 'daily-reminder',
+          requireInteraction: false,
+        });
+        return;
+      }
+    }
+
+    // Fallback to regular notification for desktop
     const notification = new Notification(title, {
       body,
-      icon: icon || '/icon-192x192.png',
-      badge: '/icon-192x192.png',
+      icon: icon || '/todaydone/icon-192x192.png',
+      badge: '/todaydone/icon-192x192.png',
       tag: 'daily-reminder',
       requireInteraction: false,
     });
@@ -68,13 +93,18 @@ export function showNotification(title: string, body: string, icon?: string): vo
 
     notification.onclick = () => {
       window.focus();
+      // Navigate to home page
+      window.location.hash = '/';
       notification.close();
     };
+  } catch (error) {
+    console.error('Failed to show notification:', error);
   }
 }
 
 export function shouldShowNotification(settings: NotificationSettings): boolean {
   if (!settings.enabled) return false;
+  if (!('Notification' in window)) return false;
   if (Notification.permission !== 'granted') return false;
 
   const now = new Date();

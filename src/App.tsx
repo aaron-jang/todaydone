@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, Link } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Today from './pages/Today';
 import Routines from './pages/Routines';
@@ -17,6 +17,8 @@ import {
 import './App.css';
 
 function App() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Initialize dark mode on app load
     const saved = localStorage.getItem('darkMode');
@@ -29,47 +31,81 @@ function App() {
       localStorage.setItem('darkMode', 'true');
     }
 
-    // Initialize notification scheduler
-    const initializeNotifications = async () => {
-      const settings = getNotificationSettings();
-
-      // If notifications are not configured yet, request permission and enable by default
-      if (!settings.enabled && Notification.permission === 'default') {
-        const granted = await requestNotificationPermission();
-        if (granted) {
-          const newSettings = {
-            enabled: true,
-            time: '08:00',
-            lastNotified: null,
-          };
-          saveNotificationSettings(newSettings);
-        }
+    // Listen for messages from Service Worker (notification click)
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data && event.data.type === 'NOTIFICATION_CLICK') {
+        // Navigate to the specified route
+        navigate(event.data.route || '/');
       }
     };
 
-    const checkNotification = () => {
-      const settings = getNotificationSettings();
-      if (shouldShowNotification(settings)) {
-        const message = getNotificationMessage();
-        showNotification(message.title, message.body);
-        markNotificationShown();
+    navigator.serviceWorker?.addEventListener('message', handleMessage);
+
+    // Cleanup listener on unmount
+    const cleanup = () => {
+      navigator.serviceWorker?.removeEventListener('message', handleMessage);
+    };
+
+    // Initialize notification scheduler
+    const initializeNotifications = async () => {
+      try {
+        // Check if Notification API is supported
+        if (typeof Notification === 'undefined') {
+          console.log('Notifications not supported in this browser');
+          return;
+        }
+
+        const settings = getNotificationSettings();
+
+        // If notifications are not configured yet, request permission and enable by default
+        if (!settings.enabled && Notification.permission === 'default') {
+          const granted = await requestNotificationPermission();
+          if (granted) {
+            const newSettings = {
+              enabled: true,
+              time: '08:00',
+              lastNotified: null,
+            };
+            saveNotificationSettings(newSettings);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to initialize notifications:', error);
+      }
+    };
+
+    const checkNotification = async () => {
+      try {
+        if (typeof Notification === 'undefined') {
+          return;
+        }
+
+        const settings = getNotificationSettings();
+        if (shouldShowNotification(settings)) {
+          const message = getNotificationMessage();
+          await showNotification(message.title, message.body);
+          markNotificationShown();
+        }
+      } catch (error) {
+        console.error('Failed to check notification:', error);
       }
     };
 
     // Initialize notifications on first load
-    initializeNotifications();
-
-    // Check immediately on load
-    checkNotification();
+    initializeNotifications().catch((error) => {
+      console.error('Notification initialization error:', error);
+    });
 
     // Schedule periodic checks (every minute)
+    // Don't check immediately on load - only at scheduled time
     const intervalId = scheduleNotificationCheck(checkNotification);
 
     // Cleanup on unmount
     return () => {
       clearInterval(intervalId);
+      cleanup();
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="app">
