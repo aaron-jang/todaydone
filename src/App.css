@@ -750,6 +750,29 @@ button:active {
   color: var(--text-primary);
 }
 
+.btn-share {
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px var(--shadow-sm);
+}
+
+.btn-share:hover {
+  background: var(--accent-blue-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px var(--shadow-md);
+}
+
+.btn-share:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px var(--shadow-sm);
+}
+
 .user-section-progress,
 .user-section-count {
   font-size: 1rem;

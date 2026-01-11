@@ -116,6 +116,76 @@ export default function Today() {
     await loadTodayLogs();
   }
 
+  function generateShareText(user: User, logs: DailyLogWithRoutine[]): string {
+    const completed = logs.filter(log => log.done).length;
+    const total = logs.length;
+    const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+    let text = `🎉 ${todayString} 루틴 현황\n\n`;
+    text += `${user.emoji} ${user.name}\n\n`;
+
+    // 각 루틴별 상세 정보
+    logs.forEach(log => {
+      if (!log.routine) return;
+
+      const isDone = log.done;
+      const checkmark = isDone ? '✅' : '⬜';
+
+      if (log.routine.type === 'check') {
+        text += `${checkmark} ${log.routine.title}\n`;
+      } else if (log.routine.type === 'time') {
+        const current = log.spentMinutes || 0;
+        const target = log.routine.targetMinutes || 0;
+        text += `${checkmark} ${log.routine.title}\n`;
+        text += `   ⏱️ ${current}/${target}분\n`;
+      } else if (log.routine.type === 'count') {
+        const current = log.currentCount || 0;
+        const target = log.routine.targetCount || 0;
+        text += `${checkmark} ${log.routine.title}\n`;
+        text += `   🔢 ${current}/${target}회\n`;
+      }
+    });
+
+    text += `\n진행률: ${completed}/${total} (${progress}%)\n`;
+
+    if (progress === 100) {
+      text += `\n🎉 완벽해요! 🎉`;
+    }
+
+    return text;
+  }
+
+  async function shareRoutines(user: User, logs: DailyLogWithRoutine[]) {
+    const shareText = generateShareText(user, logs);
+
+    try {
+      // Web Share API 지원 확인
+      if (navigator.share) {
+        await navigator.share({
+          title: `${user.name}의 루틴 현황`,
+          text: shareText
+        });
+      } else {
+        // Fallback: 클립보드 복사
+        await navigator.clipboard.writeText(shareText);
+        alert('클립보드에 복사되었습니다!');
+      }
+    } catch (error) {
+      // 사용자가 공유를 취소한 경우 등
+      if ((error as Error).name !== 'AbortError') {
+        console.error('공유 실패:', error);
+        // Fallback으로 클립보드 복사 시도
+        try {
+          await navigator.clipboard.writeText(shareText);
+          alert('클립보드에 복사되었습니다!');
+        } catch (clipboardError) {
+          console.error('클립보드 복사 실패:', clipboardError);
+          alert('공유에 실패했습니다.');
+        }
+      }
+    }
+  }
+
   if (loading) {
     return <div className="container">불러오는 중...</div>;
   }
@@ -176,6 +246,13 @@ export default function Today() {
               <span className="user-section-progress">
                 {userCompleted}/{userTotal}
               </span>
+              <button
+                onClick={() => shareRoutines(group.user, group.logs)}
+                className="btn-share"
+                title="공유하기"
+              >
+                📤
+              </button>
             </div>
 
             {userProgress === 100 && userTotal > 0 && (
