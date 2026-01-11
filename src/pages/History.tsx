@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { db, getAllUsers } from '../lib/db';
 import { getRecentDates, getTodayString } from '../lib/date';
-import { DailyLog, User } from '../lib/models';
+import { User } from '../lib/models';
 
 interface DayStats {
   date: string;
@@ -48,16 +48,32 @@ export default function History() {
         const dayStats: DayStats[] = [];
 
         for (const date of recentDates) {
+          // 1. Get daily logs for this date
           const logs = await db.dailyLogs
             .where('date')
             .equals(date)
             .filter(log => log.userId === user.id)
             .toArray();
 
-          const activeLogs = await filterActiveLogs(logs, user.id);
+          // 2. Get all active routines that existed on this date
+          const allActiveRoutines = await db.routines
+            .filter(r => {
+              if (!r.isActive || r.userId !== user.id) return false;
 
-          const completed = activeLogs.filter((log) => log.done).length;
-          const total = activeLogs.length;
+              // Check if routine was created before or on this date
+              const routineDate = r.createdAt.split('T')[0]; // Extract YYYY-MM-DD
+              return routineDate <= date;
+            })
+            .toArray();
+
+          // 3. Calculate completed count from actual logs
+          const activeRoutineIds = new Set(allActiveRoutines.map(r => r.id));
+          const completed = logs.filter(log =>
+            log.done && activeRoutineIds.has(log.routineId)
+          ).length;
+
+          // 4. Total is the number of active routines that existed on this date
+          const total = allActiveRoutines.length;
 
           dayStats.push({ date, completed, total });
         }
@@ -71,13 +87,6 @@ export default function History() {
     setUserGroups(groups);
   }
 
-  async function filterActiveLogs(logs: DailyLog[], userId: string): Promise<DailyLog[]> {
-    const activeRoutineIds = new Set(
-      (await db.routines.filter(r => r.isActive && r.userId === userId).toArray()).map((r) => r.id)
-    );
-
-    return logs.filter((log) => activeRoutineIds.has(log.routineId));
-  }
 
   function calculateStreak(dayStats: DayStats[]): number {
     let currentStreak = 0;
