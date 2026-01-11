@@ -13,8 +13,9 @@ export interface Routine {
   isActive: boolean;
   sortOrder: number;
   createdAt: string;
-  type: 'check' | 'time';
+  type: 'check' | 'time' | 'count';
   targetMinutes?: number;
+  targetCount?: number;
 }
 
 export interface DailyLog {
@@ -24,6 +25,7 @@ export interface DailyLog {
   done: boolean;
   updatedAt: string;
   spentMinutes?: number;
+  currentCount?: number;
 }
 
 export interface DailyLogWithRoutine extends DailyLog {

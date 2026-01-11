@@ -132,7 +132,8 @@ export async function initializeTodayLogs(todayString: string): Promise<void> {
           userId: user.id,
           done: false,
           updatedAt: new Date().toISOString(),
-          spentMinutes: routine.type === 'time' ? 0 : undefined
+          spentMinutes: routine.type === 'time' ? 0 : undefined,
+          currentCount: routine.type === 'count' ? 0 : undefined
         });
       }
     }

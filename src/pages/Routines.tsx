@@ -12,8 +12,9 @@ export default function Routines() {
   const [userGroups, setUserGroups] = useState<UserRoutinesGroup[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string>('');
   const [newTitle, setNewTitle] = useState('');
-  const [newType, setNewType] = useState<'check' | 'time'>('check');
+  const [newType, setNewType] = useState<'check' | 'time' | 'count'>('check');
   const [newTargetMinutes, setNewTargetMinutes] = useState('30');
+  const [newTargetCount, setNewTargetCount] = useState('10');
 
   useEffect(() => {
     loadRoutines();
@@ -59,13 +60,15 @@ export default function Routines() {
       sortOrder: userGroup.routines.length,
       createdAt: new Date().toISOString(),
       type: newType,
-      targetMinutes: newType === 'time' ? parseInt(newTargetMinutes, 10) : undefined
+      targetMinutes: newType === 'time' ? parseInt(newTargetMinutes, 10) : undefined,
+      targetCount: newType === 'count' ? parseInt(newTargetCount, 10) : undefined
     };
 
     await db.routines.add(routine);
     setNewTitle('');
     setNewType('check');
     setNewTargetMinutes('30');
+    setNewTargetCount('10');
     await loadRoutines();
   }
 
@@ -140,7 +143,7 @@ export default function Routines() {
               type="radio"
               value="check"
               checked={newType === 'check'}
-              onChange={(e) => setNewType(e.target.value as 'check' | 'time')}
+              onChange={(e) => setNewType(e.target.value as 'check' | 'time' | 'count')}
             />
             ✅ 체크
           </label>
@@ -149,9 +152,18 @@ export default function Routines() {
               type="radio"
               value="time"
               checked={newType === 'time'}
-              onChange={(e) => setNewType(e.target.value as 'check' | 'time')}
+              onChange={(e) => setNewType(e.target.value as 'check' | 'time' | 'count')}
             />
             ⏱️ 시간
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="count"
+              checked={newType === 'count'}
+              onChange={(e) => setNewType(e.target.value as 'check' | 'time' | 'count')}
+            />
+            🔢 횟수
           </label>
         </div>
 
@@ -163,6 +175,20 @@ export default function Routines() {
                 type="number"
                 value={newTargetMinutes}
                 onChange={(e) => setNewTargetMinutes(e.target.value)}
+                min="1"
+              />
+            </label>
+          </div>
+        )}
+
+        {newType === 'count' && (
+          <div className="target-minutes">
+            <label>
+              목표 횟수:
+              <input
+                type="number"
+                value={newTargetCount}
+                onChange={(e) => setNewTargetCount(e.target.value)}
                 min="1"
               />
             </label>
@@ -209,6 +235,11 @@ export default function Routines() {
                     {routine.type === 'time' && (
                       <span className="routine-meta">
                         ⏱ {routine.targetMinutes}분
+                      </span>
+                    )}
+                    {routine.type === 'count' && (
+                      <span className="routine-meta">
+                        🔢 {routine.targetCount}회
                       </span>
                     )}
                   </div>

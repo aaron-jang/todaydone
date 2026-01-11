@@ -99,6 +99,23 @@ export default function Today() {
     await loadTodayLogs();
   }
 
+  async function addCount(log: DailyLogWithRoutine, count: number) {
+    if (!log.routine || log.routine.type !== 'count') return;
+
+    const currentCount = log.currentCount || 0;
+    const newCount = Math.max(0, currentCount + count); // 음수 방지
+    const targetCount = log.routine.targetCount || 0;
+    const newDone = newCount >= targetCount;
+
+    await db.dailyLogs.update([todayString, log.routineId], {
+      currentCount: newCount,
+      done: newDone,
+      updatedAt: new Date().toISOString()
+    });
+
+    await loadTodayLogs();
+  }
+
   if (loading) {
     return <div className="container">불러오는 중...</div>;
   }
@@ -173,6 +190,7 @@ export default function Today() {
 
                 const isCheck = log.routine.type === 'check';
                 const isTime = log.routine.type === 'time';
+                const isCount = log.routine.type === 'count';
 
                 return (
                   <div key={log.routineId} className="routine-item">
@@ -213,6 +231,40 @@ export default function Today() {
                             <button onClick={() => addMinutes(log, 5)}>+5</button>
                             <button onClick={() => addMinutes(log, 10)}>+10</button>
                             <button onClick={() => addMinutes(log, 30)}>+30</button>
+                          </div>
+                          {log.done && (
+                            <div className="time-completed-badge">
+                              ✨ 완료!
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {isCount && (
+                        <div className="time-routine">
+                          <div className="time-info">
+                            <span className={log.done ? 'done' : ''}>{log.routine.title}</span>
+                            <div className="time-progress-wrapper">
+                              <div className="time-progress-text">
+                                🔢 {log.currentCount || 0} / {log.routine.targetCount} 회
+                              </div>
+                              <div className="time-progress-bar-container">
+                                <div
+                                  className="time-progress-bar-fill"
+                                  style={{
+                                    width: `${Math.min(
+                                      ((log.currentCount || 0) / (log.routine.targetCount || 1)) * 100,
+                                      100
+                                    )}%`
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="time-buttons">
+                            <button onClick={() => addCount(log, -1)}>-1</button>
+                            <button onClick={() => addCount(log, 1)}>+1</button>
+                            <button onClick={() => addCount(log, 5)}>+5</button>
                           </div>
                           {log.done && (
                             <div className="time-completed-badge">
