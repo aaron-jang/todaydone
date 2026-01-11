@@ -262,7 +262,6 @@ export default function Today() {
                             </div>
                           </div>
                           <div className="time-buttons">
-                            <button onClick={() => addCount(log, -1)}>-1</button>
                             <button onClick={() => addCount(log, 1)}>+1</button>
                             <button onClick={() => addCount(log, 5)}>+5</button>
                           </div>
