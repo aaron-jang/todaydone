@@ -545,13 +545,19 @@ h2 {
   font-weight: 600;
   font-size: 1rem;
   background: white;
+  color: #334155;
   border: 2px solid #dee2e6;
   transition: all 0.2s ease;
 }
 
 .routine-type-selector label:hover {
   border-color: #2563eb;
-  background: var(--bg-tertiary);
+}
+
+.routine-type-selector label:has(input[type="radio"]:checked) {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
 }
 
 .routine-type-selector input[type="radio"] {
@@ -1095,6 +1101,22 @@ html.dark-mode .notification-warning {
   background: rgba(255, 193, 7, 0.15);
   border-color: #ffc107;
   color: #ffd54f;
+}
+
+html.dark-mode .routine-type-selector label {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+html.dark-mode .routine-type-selector label:hover {
+  border-color: var(--accent-blue);
+}
+
+html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
+  background: var(--accent-blue);
+  color: white;
+  border-color: var(--accent-blue);
 }
 
 .toggle-button:disabled {
