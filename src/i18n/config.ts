@@ -7,9 +7,11 @@ import { initReactI18next } from 'react-i18next';
 // Add new languages here by importing their JSON files
 import ko from './locales/ko.json';
 import en from './locales/en.json';
-// import ja from './locales/ja.json';  // Example: Japanese
-// import zh from './locales/zh.json';  // Example: Chinese
-// import es from './locales/es.json';  // Example: Spanish
+import ja from './locales/ja.json';
+import zhCN from './locales/zh-CN.json';
+import zhTW from './locales/zh-TW.json';
+import es from './locales/es.json';
+import ar from './locales/ar.json';
 
 // ============================================
 // STEP 2: Browser language detection
@@ -28,10 +30,32 @@ const getBrowserLanguage = (): string => {
     return 'en';
   }
 
-  // Add new language detection here:
-  // if (browserLang.startsWith('ja')) return 'ja';  // Japanese
-  // if (browserLang.startsWith('zh')) return 'zh';  // Chinese
-  // if (browserLang.startsWith('es')) return 'es';  // Spanish
+  // Japanese detection (ja, ja-JP, etc.)
+  if (browserLang.startsWith('ja')) {
+    return 'ja';
+  }
+
+  // Chinese detection
+  if (browserLang.startsWith('zh')) {
+    // Distinguish between Simplified and Traditional Chinese
+    if (browserLang.includes('cn') || browserLang.includes('hans') || browserLang === 'zh-sg') {
+      return 'zh-CN'; // Simplified Chinese
+    }
+    if (browserLang.includes('tw') || browserLang.includes('hk') || browserLang.includes('hant') || browserLang === 'zh-mo') {
+      return 'zh-TW'; // Traditional Chinese
+    }
+    return 'zh-CN'; // Default to Simplified
+  }
+
+  // Spanish detection (es, es-ES, es-MX, es-AR, etc.)
+  if (browserLang.startsWith('es')) {
+    return 'es';
+  }
+
+  // Arabic detection (ar, ar-SA, ar-EG, ar-AE, etc.)
+  if (browserLang.startsWith('ar')) {
+    return 'ar';
+  }
 
   // Default fallback language
   return 'en';
@@ -47,9 +71,11 @@ i18n
     resources: {
       ko: { translation: ko },
       en: { translation: en },
-      // ja: { translation: ja },  // Example: Japanese
-      // zh: { translation: zh },  // Example: Chinese
-      // es: { translation: es },  // Example: Spanish
+      ja: { translation: ja },
+      'zh-CN': { translation: zhCN },
+      'zh-TW': { translation: zhTW },
+      es: { translation: es },
+      ar: { translation: ar },
     },
 
     // Auto-detect browser language
@@ -72,5 +98,6 @@ export default i18n;
 // ============================================
 // Supported languages
 // ============================================
-// Current: ko (Korean), en (English)
+// Current: ko (Korean), en (English), ja (Japanese), zh-CN (Simplified Chinese),
+//          zh-TW (Traditional Chinese), es (Spanish), ar (Arabic)
 // To add more: Follow steps 1-3 above and update this comment

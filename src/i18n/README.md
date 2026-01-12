@@ -6,6 +6,11 @@ This project uses `i18next` and `react-i18next` for internationalization.
 
 - 🇰🇷 Korean (ko) - 한국어
 - 🇺🇸 English (en) - Default
+- 🇯🇵 Japanese (ja) - 日本語
+- 🇨🇳 Simplified Chinese (zh-CN) - 简体中文
+- 🇹🇼 Traditional Chinese (zh-TW) - 繁體中文
+- 🇪🇸 Spanish (es) - Español
+- 🇸🇦 Arabic (ar) - العربية
 
 ## How to Add a New Language
 

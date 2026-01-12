@@ -23,12 +23,40 @@ export function updateSeoTags(): void {
   // Update language attribute
   const currentLang = i18n.language;
   document.documentElement.lang = currentLang;
-  updateMetaTag('name', 'language', currentLang === 'ko' ? 'Korean' : 'English');
 
-  // Update Open Graph tags
+  // Set dir attribute for RTL languages (Arabic)
+  if (currentLang === 'ar') {
+    document.documentElement.dir = 'rtl';
+  } else {
+    document.documentElement.dir = 'ltr';
+  }
+
+  // Language name mapping
+  const languageNames: Record<string, string> = {
+    'ko': 'Korean',
+    'en': 'English',
+    'ja': 'Japanese',
+    'zh-CN': 'Chinese (Simplified)',
+    'zh-TW': 'Chinese (Traditional)',
+    'es': 'Spanish',
+    'ar': 'Arabic'
+  };
+  updateMetaTag('name', 'language', languageNames[currentLang] || 'English');
+
+  // Update Open Graph tags with locale mapping
+  const localeMapping: Record<string, string> = {
+    'ko': 'ko_KR',
+    'en': 'en_US',
+    'ja': 'ja_JP',
+    'zh-CN': 'zh_CN',
+    'zh-TW': 'zh_TW',
+    'es': 'es_ES',
+    'ar': 'ar_AR'
+  };
+
   updateMetaTag('property', 'og:title', title);
   updateMetaTag('property', 'og:description', description);
-  updateMetaTag('property', 'og:locale', currentLang === 'ko' ? 'ko_KR' : 'en_US');
+  updateMetaTag('property', 'og:locale', localeMapping[currentLang] || 'en_US');
   updateMetaTag('property', 'og:site_name', appName);
 
   // Update Twitter tags
@@ -65,6 +93,28 @@ function updateStructuredData(): void {
   const featureList = i18n.t('seo.featureList', { returnObjects: true }) as string[];
   const currentLang = i18n.language;
 
+  // Currency mapping for different locales
+  const currencyMapping: Record<string, string> = {
+    'ko': 'KRW',
+    'en': 'USD',
+    'ja': 'JPY',
+    'zh-CN': 'CNY',
+    'zh-TW': 'TWD',
+    'es': 'EUR',
+    'ar': 'USD'
+  };
+
+  // Language code mapping for inLanguage
+  const inLanguageMapping: Record<string, string> = {
+    'ko': 'ko-KR',
+    'en': 'en-US',
+    'ja': 'ja-JP',
+    'zh-CN': 'zh-CN',
+    'zh-TW': 'zh-TW',
+    'es': 'es-ES',
+    'ar': 'ar-SA'
+  };
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -77,7 +127,7 @@ function updateStructuredData(): void {
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": currentLang === 'ko' ? 'KRW' : 'USD'
+      "priceCurrency": currencyMapping[currentLang] || 'USD'
     },
     "browserRequirements": "Requires JavaScript. Requires HTML5.",
     "screenshot": "https://soosoo.life/todaydone/icon-512x512.png",
@@ -90,7 +140,7 @@ function updateStructuredData(): void {
       "@type": "Organization",
       "name": "TodayDone"
     },
-    "inLanguage": currentLang === 'ko' ? 'ko-KR' : 'en-US',
+    "inLanguage": inLanguageMapping[currentLang] || 'en-US',
     "featureList": featureList
   };
 

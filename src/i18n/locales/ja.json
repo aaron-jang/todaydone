@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "today": "今日",
+    "routines": "ルーティン",
+    "history": "履歴",
+    "settings": "設定"
+  },
+  "today": {
+    "title": "📅 {{date}}",
+    "loading": "読み込み中...",
+    "noFamily": "まず家族を追加してください！設定ページから追加できます。😊",
+    "noRoutines": "アクティブなルーティンがありません。ルーティンページから追加してください！😊",
+    "overallProgress": "全体の進捗",
+    "perfect": "🎉 完璧です！今日も素晴らしいです！🎉",
+    "userPerfect": "🎉 {{name}}さん、完璧です！🎉",
+    "userRoutines": "{{name}}のルーティン",
+    "share": "共有",
+    "completed": "✨ 完了！",
+    "minutes": "分",
+    "times": "回"
+  },
+  "routines": {
+    "title": "📝 ルーティン管理",
+    "noFamily": "まず家族を追加してください！設定ページから追加できます。😊",
+    "selectUser": "誰のルーティンを追加しますか？",
+    "inputPlaceholder": "ルーティン名を入力してください（例：歯磨き、読書）",
+    "typeCheck": "✅ チェック",
+    "typeTime": "⏱️ 時間",
+    "typeCount": "🔢 カウント",
+    "targetMinutes": "目標時間（分）：",
+    "targetCount": "目標回数：",
+    "addButton": "➕ 追加する",
+    "userRoutines": "{{name}}のルーティン",
+    "routineCount": "{{count}}個",
+    "noRoutines": "まだルーティンがありません",
+    "deactivate": "❌ 無効化",
+    "activate": "✅ 有効化",
+    "delete": "🗑️ 削除",
+    "deleteConfirm": "このルーティンを削除しますか？",
+    "moveUp": "上へ",
+    "moveDown": "下へ"
+  },
+  "history": {
+    "title": "📊 家族の履歴",
+    "noFamily": "まず家族を追加してください！設定ページから追加できます。😊",
+    "userHistory": "{{name}}の履歴",
+    "streak": "🔥 連続達成：{{count}}日！",
+    "showLess": "📖 簡易表示",
+    "showMore": "📋 詳細表示（合計{{count}}日）",
+    "routineStats": "📈 ルーティン別統計",
+    "days": "日"
+  },
+  "settings": {
+    "title": "⚙️ 設定",
+    "familyManagement": "👨‍👩‍👧‍👦 家族管理",
+    "addFamily": "➕ 家族を追加",
+    "newFamily": "新しい家族を追加",
+    "name": "名前",
+    "namePlaceholder": "名前を入力してください（例：ママ、サラ）",
+    "emojiSelect": "絵文字を選択",
+    "complete": "✅ 完了",
+    "cancel": "キャンセル",
+    "edit": "✏️ 編集",
+    "delete": "🗑️ 削除",
+    "deleteConfirm": "本当に削除しますか？この家族のすべてのルーティンと記録が削除されます！",
+    "darkMode": "🌙 ダークモード",
+    "darkModeDesc": "ダークテーマに切り替え",
+    "notifications": "🔔 通知設定",
+    "morningAlarm": "朝のアラーム",
+    "morningAlarmDesc": "毎日設定した時間に通知を受け取る",
+    "notificationTime": "通知時間",
+    "enableNotifications": "通知を有効にする",
+    "disableNotifications": "通知を無効にする",
+    "notificationEnabled": "通知が有効になりました！毎朝8時に通知を受け取ります 🔔",
+    "notificationPermission": "通知の許可が必要です。ブラウザの設定で通知を許可してください。",
+    "dataManagement": "📱 データ管理",
+    "exportData": "💾 データをエクスポート",
+    "importData": "📥 データをインポート",
+    "resetData": "🔄 データをリセット",
+    "exportSuccess": "データのエクスポートに成功しました！📦",
+    "exportFailed": "エクスポートに失敗しました 😢",
+    "importSuccess": "データをインポートしました！ページを更新します... ✨",
+    "importFailed": "インポートに失敗しました。ファイルを確認してください 😢",
+    "resetConfirm": "すべてのデータを削除しますか？元に戻せません！⚠️",
+    "resetSuccess": "すべてのデータを削除しました。ページを更新します... 🔄",
+    "resetFailed": "リセットに失敗しました 😢",
+    "moveUp": "上へ",
+    "moveDown": "下へ"
+  },
+  "share": {
+    "title": "🎉 {{date}} ルーティン状況",
+    "progress": "進捗：{{completed}}/{{total}}（{{percent}}%）",
+    "perfectMessage": "🎉 完璧です！🎉",
+    "copied": "クリップボードにコピーしました！",
+    "failed": "共有に失敗しました。"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "confirm": "確認",
+    "cancel": "キャンセル"
+  },
+  "notifications": {
+    "messages": [
+      {
+        "title": "🌅 おはようございます！",
+        "body": "今日のルーティンを始めましょう！"
+      },
+      {
+        "title": "☀️ 新しい一日！",
+        "body": "健康的なルーティンで一日を始めましょう！"
+      },
+      {
+        "title": "🌤️ おはようございます！",
+        "body": "今日のタスクを確認しましょう。"
+      },
+      {
+        "title": "✨ 新しい一日が始まりました！",
+        "body": "今日も一緒にルーティンを完成させましょう！"
+      },
+      {
+        "title": "🎯 さあ、始めましょう！",
+        "body": "目標に向かって一歩ずつ！"
+      }
+    ]
+  },
+  "seo": {
+    "title": "家族のルーティン - 子供のための毎日のルーティン管理アプリ",
+    "description": "小学生と保護者のための楽しいルーティン管理アプリ。今日のタスクをチェックし、時間のルーティンを記録し、達成記録を確認できます。無料のPWAアプリです。",
+    "keywords": "ルーティン管理, 子供, 習慣作り, タスク管理, チェックリスト, 時間管理, 子供向けアプリ, 学習習慣, 毎日のルーティン, PWA",
+    "appName": "家族のルーティン",
+    "appShortName": "ルーティン",
+    "featureList": [
+      "今日のタスクチェックリスト",
+      "時間ルーティンの記録",
+      "達成記録の追跡",
+      "データのバックアップ/復元",
+      "オフライン使用",
+      "PWAアプリのインストール"
+    ]
+  }
+}

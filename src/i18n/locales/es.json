@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "today": "Hoy",
+    "routines": "Rutinas",
+    "history": "Historial",
+    "settings": "Ajustes"
+  },
+  "today": {
+    "title": "📅 {{date}}",
+    "loading": "Cargando...",
+    "noFamily": "¡Por favor, añade miembros de la familia primero! Puedes añadirlos en la página de Ajustes. 😊",
+    "noRoutines": "No hay rutinas activas. ¡Por favor, añade algunas en la página de Rutinas! 😊",
+    "overallProgress": "Progreso General",
+    "perfect": "🎉 ¡Perfecto! ¡Gran trabajo hoy! 🎉",
+    "userPerfect": "🎉 ¡Perfecto, {{name}}! 🎉",
+    "userRoutines": "Rutinas de {{name}}",
+    "share": "Compartir",
+    "completed": "✨ ¡Completado!",
+    "minutes": "min",
+    "times": "veces"
+  },
+  "routines": {
+    "title": "📝 Gestión de Rutinas",
+    "noFamily": "¡Por favor, añade miembros de la familia primero! Puedes añadirlos en la página de Ajustes. 😊",
+    "selectUser": "¿De quién quieres añadir una rutina?",
+    "inputPlaceholder": "Introduce el nombre de la rutina (ej: Cepillarse los dientes, Leer)",
+    "typeCheck": "✅ Marcar",
+    "typeTime": "⏱️ Tiempo",
+    "typeCount": "🔢 Contador",
+    "targetMinutes": "Tiempo objetivo (minutos):",
+    "targetCount": "Contador objetivo:",
+    "addButton": "➕ Añadir Rutina",
+    "userRoutines": "Rutinas de {{name}}",
+    "routineCount": "{{count}} rutinas",
+    "noRoutines": "Aún no hay rutinas",
+    "deactivate": "❌ Desactivar",
+    "activate": "✅ Activar",
+    "delete": "🗑️ Eliminar",
+    "deleteConfirm": "¿Eliminar esta rutina?",
+    "moveUp": "Subir",
+    "moveDown": "Bajar"
+  },
+  "history": {
+    "title": "📊 Historial Familiar",
+    "noFamily": "¡Por favor, añade miembros de la familia primero! Puedes añadirlos en la página de Ajustes. 😊",
+    "userHistory": "Historial de {{name}}",
+    "streak": "🔥 Racha: ¡{{count}} días!",
+    "showLess": "📖 Mostrar Menos",
+    "showMore": "📋 Mostrar Más ({{count}} días en total)",
+    "routineStats": "📈 Estadísticas de Rutinas",
+    "days": "días"
+  },
+  "settings": {
+    "title": "⚙️ Ajustes",
+    "familyManagement": "👨‍👩‍👧‍👦 Gestión Familiar",
+    "addFamily": "➕ Añadir Miembro de la Familia",
+    "newFamily": "Añadir Nuevo Miembro de la Familia",
+    "name": "Nombre",
+    "namePlaceholder": "Introduce el nombre (ej: Mamá, Sara)",
+    "emojiSelect": "Seleccionar Emoji",
+    "complete": "✅ Hecho",
+    "cancel": "Cancelar",
+    "edit": "✏️ Editar",
+    "delete": "🗑️ Eliminar",
+    "deleteConfirm": "¿Estás seguro? ¡Se eliminarán todas las rutinas y registros de este miembro de la familia!",
+    "darkMode": "🌙 Modo Oscuro",
+    "darkModeDesc": "Cambiar al tema oscuro",
+    "notifications": "🔔 Ajustes de Notificaciones",
+    "morningAlarm": "Alarma Matutina",
+    "morningAlarmDesc": "Recibe notificaciones a la hora establecida cada día",
+    "notificationTime": "Hora de Notificación",
+    "enableNotifications": "Activar Notificaciones",
+    "disableNotifications": "Desactivar Notificaciones",
+    "notificationEnabled": "¡Notificaciones activadas! Recibirás recordatorios cada mañana a las 8 AM 🔔",
+    "notificationPermission": "Se requiere permiso de notificación. Por favor, activa las notificaciones en la configuración de tu navegador.",
+    "dataManagement": "📱 Gestión de Datos",
+    "exportData": "💾 Exportar Datos",
+    "importData": "📥 Importar Datos",
+    "resetData": "🔄 Restablecer Datos",
+    "exportSuccess": "¡Datos exportados con éxito! 📦",
+    "exportFailed": "Exportación fallida 😢",
+    "importSuccess": "¡Datos importados! Actualizando página... ✨",
+    "importFailed": "Importación fallida. Por favor, verifica el archivo 😢",
+    "resetConfirm": "¿Eliminar todos los datos? ¡Esta acción no se puede deshacer! ⚠️",
+    "resetSuccess": "Todos los datos eliminados. Actualizando página... 🔄",
+    "resetFailed": "Restablecimiento fallido 😢",
+    "moveUp": "Subir",
+    "moveDown": "Bajar"
+  },
+  "share": {
+    "title": "🎉 Estado de Rutinas del {{date}}",
+    "progress": "Progreso: {{completed}}/{{total}} ({{percent}}%)",
+    "perfectMessage": "🎉 ¡Perfecto! 🎉",
+    "copied": "¡Copiado al portapapeles!",
+    "failed": "Compartir fallido."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
+  },
+  "notifications": {
+    "messages": [
+      {
+        "title": "🌅 ¡Buenos días!",
+        "body": "¿Listo para comenzar tus rutinas de hoy? ¡Vamos!"
+      },
+      {
+        "title": "☀️ ¡Nuevo día!",
+        "body": "¡Comencemos el día con rutinas saludables!"
+      },
+      {
+        "title": "🌤️ ¡Buenos días!",
+        "body": "¿Revisamos las tareas de hoy?"
+      },
+      {
+        "title": "✨ ¡Comienza un nuevo día!",
+        "body": "¡Completemos nuestras rutinas juntos hoy!"
+      },
+      {
+        "title": "🎯 ¡Vamos!",
+        "body": "¡Un paso a la vez hacia tus metas!"
+      }
+    ]
+  },
+  "seo": {
+    "title": "Rutinas Familiares - Aplicación de Gestión de Rutinas Diarias para Niños",
+    "description": "Una aplicación divertida de gestión de rutinas para estudiantes de primaria y padres. Marca las tareas de hoy, registra rutinas de tiempo y monitorea tus rachas de logros. Aplicación PWA gratuita disponible.",
+    "keywords": "gestión de rutinas, niños, formación de hábitos, gestión de tareas, lista de verificación, gestión del tiempo, aplicación para niños, hábitos de aprendizaje, rutinas diarias, PWA",
+    "appName": "Rutinas Familiares",
+    "appShortName": "Rutinas",
+    "featureList": [
+      "Lista de tareas de hoy",
+      "Seguimiento de rutinas de tiempo",
+      "Registros de rachas de logros",
+      "Copia de seguridad/restauración de datos",
+      "Uso sin conexión",
+      "Instalación de aplicación PWA"
+    ]
+  }
+}
