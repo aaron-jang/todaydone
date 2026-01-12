@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import i18n from '../i18n/config';
 import { exportData, importData, resetDatabase, getAllUsers, createUser, updateUser, deleteUser, moveUserUp, moveUserDown } from '../lib/db';
 import { User } from '../lib/models';
 import {
@@ -9,7 +8,6 @@ import {
   requestNotificationPermission,
   type NotificationSettings
 } from '../lib/notifications';
-import { formatTime } from '../lib/timeFormat';
 
 export default function Settings() {
   const { t } = useTranslation();
@@ -405,9 +403,6 @@ export default function Settings() {
                 onChange={(e) => handleTimeChange(e.target.value)}
                 className="notification-time-input"
               />
-              <div className="notification-time-display" style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                {formatTime(notificationSettings.time, i18n.language)}
-              </div>
             </div>
           )}
 
