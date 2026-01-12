@@ -304,11 +304,13 @@ export default function Today() {
                               </div>
                             </div>
                           </div>
-                          <div className="time-buttons">
-                            <button onClick={() => addMinutes(log, 5)}>+5</button>
-                            <button onClick={() => addMinutes(log, 10)}>+10</button>
-                            <button onClick={() => addMinutes(log, 30)}>+30</button>
-                          </div>
+                          {!log.done && (
+                            <div className="time-buttons">
+                              <button onClick={() => addMinutes(log, 5)}>+5</button>
+                              <button onClick={() => addMinutes(log, 10)}>+10</button>
+                              <button onClick={() => addMinutes(log, 30)}>+30</button>
+                            </div>
+                          )}
                           {log.done && (
                             <div className="time-completed-badge">
                               ✨ 완료!
@@ -338,10 +340,12 @@ export default function Today() {
                               </div>
                             </div>
                           </div>
-                          <div className="time-buttons">
-                            <button onClick={() => addCount(log, 1)}>+1</button>
-                            <button onClick={() => addCount(log, 5)}>+5</button>
-                          </div>
+                          {!log.done && (
+                            <div className="time-buttons">
+                              <button onClick={() => addCount(log, 1)}>+1</button>
+                              <button onClick={() => addCount(log, 5)}>+5</button>
+                            </div>
+                          )}
                           {log.done && (
                             <div className="time-completed-badge">
                               ✨ 완료!
