@@ -385,33 +385,36 @@ h2 {
 .time-info {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.5rem;
   padding: 0;
 }
 
-.time-info span:first-child {
+.time-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.time-header span:first-child {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-primary);
+  flex: 1;
 }
 
-.time-info span:first-child.done {
+.time-header span:first-child.done {
   text-decoration: line-through;
   color: #b2bec3;
   opacity: 0.6;
 }
 
-.time-progress-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.time-progress-text {
-  font-size: 0.95rem;
+.time-header .time-progress-text {
+  font-size: 0.9rem;
   font-weight: 600;
   color: #2563eb;
-  text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .time-progress-bar-container {
@@ -1230,7 +1233,7 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
   }
 
   .checkbox-label span,
-  .time-info span:first-child {
+  .time-header span:first-child {
     font-size: 1.05rem;
   }
 
@@ -1331,8 +1334,12 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
   }
 
   .checkbox-label span,
-  .time-info span:first-child {
+  .time-header span:first-child {
     font-size: 1rem;
+  }
+
+  .time-header .time-progress-text {
+    font-size: 0.85rem;
   }
 
   .time-buttons {

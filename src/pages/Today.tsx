@@ -286,22 +286,22 @@ export default function Today() {
                       {isTime && (
                         <div className="time-routine">
                           <div className="time-info">
-                            <span className={log.done ? 'done' : ''}>{log.routine.title}</span>
-                            <div className="time-progress-wrapper">
-                              <div className="time-progress-text">
+                            <div className="time-header">
+                              <span className={log.done ? 'done' : ''}>{log.routine.title}</span>
+                              <span className="time-progress-text">
                                 ⏱ {log.spentMinutes || 0} / {log.routine.targetMinutes} 분
-                              </div>
-                              <div className="time-progress-bar-container">
-                                <div
-                                  className="time-progress-bar-fill"
-                                  style={{
-                                    width: `${Math.min(
-                                      ((log.spentMinutes || 0) / (log.routine.targetMinutes || 1)) * 100,
-                                      100
-                                    )}%`
-                                  }}
-                                />
-                              </div>
+                              </span>
+                            </div>
+                            <div className="time-progress-bar-container">
+                              <div
+                                className="time-progress-bar-fill"
+                                style={{
+                                  width: `${Math.min(
+                                    ((log.spentMinutes || 0) / (log.routine.targetMinutes || 1)) * 100,
+                                    100
+                                  )}%`
+                                }}
+                              />
                             </div>
                           </div>
                           {!log.done && (
@@ -322,22 +322,22 @@ export default function Today() {
                       {isCount && (
                         <div className="time-routine">
                           <div className="time-info">
-                            <span className={log.done ? 'done' : ''}>{log.routine.title}</span>
-                            <div className="time-progress-wrapper">
-                              <div className="time-progress-text">
+                            <div className="time-header">
+                              <span className={log.done ? 'done' : ''}>{log.routine.title}</span>
+                              <span className="time-progress-text">
                                 🔢 {log.currentCount || 0} / {log.routine.targetCount} 회
-                              </div>
-                              <div className="time-progress-bar-container">
-                                <div
-                                  className="time-progress-bar-fill"
-                                  style={{
-                                    width: `${Math.min(
-                                      ((log.currentCount || 0) / (log.routine.targetCount || 1)) * 100,
-                                      100
-                                    )}%`
-                                  }}
-                                />
-                              </div>
+                              </span>
+                            </div>
+                            <div className="time-progress-bar-container">
+                              <div
+                                className="time-progress-bar-fill"
+                                style={{
+                                  width: `${Math.min(
+                                    ((log.currentCount || 0) / (log.routine.targetCount || 1)) * 100,
+                                    100
+                                  )}%`
+                                }}
+                              />
                             </div>
                           </div>
                           {!log.done && (
