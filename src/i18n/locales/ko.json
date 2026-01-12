@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "today": "오늘",
+    "routines": "루틴",
+    "history": "기록",
+    "settings": "설정"
+  },
+  "today": {
+    "title": "📅 {{date}}",
+    "loading": "불러오는 중...",
+    "noFamily": "가족을 먼저 추가해주세요! 설정 페이지에서 가족을 추가할 수 있어요. 😊",
+    "noRoutines": "활성화된 루틴이 없어요. 루틴 페이지에서 추가해주세요! 😊",
+    "overallProgress": "전체 진행률",
+    "perfect": "🎉 완벽해요! 오늘도 최고예요! 🎉",
+    "userPerfect": "🎉 {{name}}님 완벽해요! 🎉",
+    "userRoutines": "{{name}}의 루틴",
+    "share": "공유하기",
+    "completed": "✨ 완료!",
+    "minutes": "분",
+    "times": "회"
+  },
+  "routines": {
+    "title": "📝 루틴 관리",
+    "noFamily": "가족을 먼저 추가해주세요! 설정 페이지에서 가족을 추가할 수 있어요. 😊",
+    "selectUser": "누구의 루틴을 추가할까요?",
+    "inputPlaceholder": "루틴 이름을 입력하세요 (예: 양치하기, 독서하기)",
+    "typeCheck": "✅ 체크",
+    "typeTime": "⏱️ 시간",
+    "typeCount": "🔢 횟수",
+    "targetMinutes": "목표 시간 (분):",
+    "targetCount": "목표 횟수:",
+    "addButton": "➕ 추가하기",
+    "userRoutines": "{{name}}의 루틴",
+    "routineCount": "{{count}}개",
+    "noRoutines": "아직 루틴이 없어요",
+    "deactivate": "❌ 비활성화",
+    "activate": "✅ 활성화",
+    "delete": "🗑️ 삭제",
+    "deleteConfirm": "이 루틴을 삭제할까요?",
+    "moveUp": "위로",
+    "moveDown": "아래로"
+  },
+  "history": {
+    "title": "📊 우리 가족 기록",
+    "noFamily": "가족을 먼저 추가해주세요! 설정 페이지에서 가족을 추가할 수 있어요. 😊",
+    "userHistory": "{{name}}의 기록",
+    "streak": "🔥 연속 달성: {{count}}일!",
+    "showLess": "📖 간단히 보기",
+    "showMore": "📋 상세보기 (전체 {{count}}일)",
+    "routineStats": "📈 루틴별 통계",
+    "days": "일"
+  },
+  "settings": {
+    "title": "⚙️ 설정",
+    "familyManagement": "👨‍👩‍👧‍👦 가족 관리",
+    "addFamily": "➕ 가족 추가하기",
+    "newFamily": "새 가족 추가하기",
+    "name": "이름",
+    "namePlaceholder": "이름을 입력하세요 (예: 엄마, 수아)",
+    "emojiSelect": "이모지 선택",
+    "complete": "✅ 완료",
+    "cancel": "취소",
+    "edit": "✏️ 수정",
+    "delete": "🗑️ 삭제",
+    "deleteConfirm": "정말 삭제할까요? 이 가족의 모든 루틴과 기록이 함께 삭제돼요!",
+    "darkMode": "🌙 다크 모드",
+    "darkModeDesc": "어두운 화면으로 전환",
+    "notifications": "🔔 알림 설정",
+    "morningAlarm": "아침 알람",
+    "morningAlarmDesc": "매일 설정한 시간에 알림을 받아요",
+    "notificationTime": "알림 시간",
+    "enableNotifications": "알림 켜기",
+    "disableNotifications": "알림 끄기",
+    "notificationEnabled": "알림이 활성화되었어요! 매일 아침 8시에 알림을 받을 수 있어요 🔔",
+    "notificationPermission": "알림 권한이 필요해요. 브라우저 설정에서 알림을 허용해주세요.",
+    "dataManagement": "📱 데이터 관리",
+    "exportData": "💾 데이터 내보내기",
+    "importData": "📥 데이터 가져오기",
+    "resetData": "🔄 데이터 초기화",
+    "exportSuccess": "데이터를 성공적으로 저장했어요! 📦",
+    "exportFailed": "저장에 실패했어요 😢",
+    "importSuccess": "데이터를 불러왔어요! 페이지를 새로고침할게요 ✨",
+    "importFailed": "불러오기에 실패했어요. 파일을 확인해주세요 😢",
+    "resetConfirm": "모든 데이터를 삭제할까요? 되돌릴 수 없어요! ⚠️",
+    "resetSuccess": "모든 데이터를 삭제했어요. 페이지를 새로고침할게요 🔄",
+    "resetFailed": "삭제에 실패했어요 😢",
+    "moveUp": "위로",
+    "moveDown": "아래로"
+  },
+  "share": {
+    "title": "🎉 {{date}} 루틴 현황",
+    "progress": "진행률: {{completed}}/{{total}} ({{percent}}%)",
+    "perfectMessage": "🎉 완벽해요! 🎉",
+    "copied": "클립보드에 복사되었습니다!",
+    "failed": "공유에 실패했습니다."
+  },
+  "common": {
+    "loading": "로딩 중...",
+    "error": "오류가 발생했습니다",
+    "confirm": "확인",
+    "cancel": "취소"
+  },
+  "notifications": {
+    "messages": [
+      {
+        "title": "🌅 좋은 아침이에요!",
+        "body": "오늘의 루틴을 시작해볼까요? 화이팅!"
+      },
+      {
+        "title": "☀️ 새로운 하루!",
+        "body": "오늘도 건강한 루틴으로 시작해요!"
+      },
+      {
+        "title": "🌤️ 좋은 아침!",
+        "body": "오늘 할 일을 확인해볼까요?"
+      },
+      {
+        "title": "✨ 새로운 하루가 시작됐어요!",
+        "body": "오늘도 함께 루틴을 완성해봐요!"
+      },
+      {
+        "title": "🎯 출발!",
+        "body": "목표를 향해 오늘도 한 걸음씩!"
+      }
+    ]
+  },
+  "seo": {
+    "title": "우리 가족 루틴 - 초등학생을 위한 하루 루틴 관리 앱",
+    "description": "초등학생과 엄마를 위한 재미있는 루틴 관리 앱. 오늘 할 일을 체크하고, 시간 루틴을 기록하며, 연속 달성 기록을 확인하세요. 무료로 사용 가능한 PWA 앱입니다.",
+    "keywords": "루틴 관리, 초등학생, 습관 만들기, 할 일 관리, 체크리스트, 시간 관리, 어린이 앱, 학습 습관, 생활 루틴, PWA",
+    "appName": "우리 가족 루틴",
+    "appShortName": "루틴",
+    "featureList": [
+      "오늘 할 일 체크리스트",
+      "시간 루틴 기록",
+      "연속 달성 기록",
+      "데이터 백업/복원",
+      "오프라인 사용 가능",
+      "PWA 앱 설치"
+    ]
+  }
+}

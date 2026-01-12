@@ -551,6 +551,8 @@ h2 {
   color: #334155;
   border: 2px solid #dee2e6;
   transition: all 0.2s ease;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .routine-type-selector label:hover {
@@ -653,6 +655,8 @@ button:active {
   font-size: 0.95rem;
   background: var(--accent-blue);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  min-width: fit-content;
 }
 
 .routine-actions button:last-child {
@@ -959,7 +963,7 @@ button:active {
 
 .emoji-option-small {
   font-size: 1.5rem;
-  padding: 0.5rem;
+  padding: 0;
   background: var(--bg-tertiary);
   border: 2px solid var(--border-color);
   border-radius: 8px;
@@ -970,8 +974,10 @@ button:active {
   align-items: center;
   justify-content: center;
   min-width: 0;
+  width: 100%;
   box-sizing: border-box;
   aspect-ratio: 1 / 1;
+  height: auto;
 }
 
 .emoji-option-small:hover {
@@ -1189,19 +1195,19 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
 
   .emoji-selector,
   .emoji-selector-small {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 0.65rem;
   }
 
   .emoji-option {
     font-size: 1.9rem;
-    padding: 0.85rem;
+    padding: 0;
     border-width: 2px;
   }
 
   .emoji-option-small {
     font-size: 1.5rem;
-    padding: 0.55rem;
+    padding: 0;
   }
 }
 
@@ -1238,13 +1244,14 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
   }
 
   .time-buttons button {
-    font-size: 1.05rem;
-    padding: 0.7rem;
+    font-size: 0.95rem;
+    padding: 0.6rem 0.4rem;
   }
 
   .routine-actions button {
     font-size: 0.9rem;
     padding: 0.6rem;
+    white-space: nowrap;
   }
 
   .user-section {
@@ -1281,19 +1288,49 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
 
   .emoji-selector,
   .emoji-selector-small {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.55rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.6rem;
   }
 
   .emoji-option {
-    font-size: 1.8rem;
-    padding: 0.7rem;
+    font-size: 1.9rem;
+    padding: 0;
     border-width: 2px;
   }
 
   .emoji-option-small {
     font-size: 1.45rem;
-    padding: 0.5rem;
+    padding: 0;
+  }
+
+  .routine-type-selector {
+    gap: 0.5rem;
+    padding: 0.6rem;
+  }
+
+  .routine-type-selector label {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.9rem;
+    gap: 0.3rem;
+  }
+
+  .routine-type-selector input[type="radio"] {
+    width: 16px;
+    height: 16px;
+  }
+
+  .user-info-card {
+    gap: 0.75rem;
+  }
+
+  .user-card-actions {
+    gap: 0.4rem;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.85rem;
   }
 }
 
@@ -1342,13 +1379,9 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
     font-size: 0.85rem;
   }
 
-  .time-buttons {
-    flex-direction: column;
-  }
-
   .time-buttons button {
-    font-size: 1rem;
-    padding: 0.65rem;
+    font-size: 0.9rem;
+    padding: 0.55rem 0.3rem;
   }
 
   .routine-actions {
@@ -1358,6 +1391,7 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
   .routine-actions button {
     font-size: 0.85rem;
     padding: 0.55rem;
+    white-space: nowrap;
   }
 
   .user-section {
@@ -1421,19 +1455,19 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
 
   .emoji-selector,
   .emoji-selector-small {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.4rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
   }
 
   .emoji-option {
-    font-size: 1.65rem;
-    padding: 0.5rem;
+    font-size: 1.8rem;
+    padding: 0;
     border-width: 2px;
   }
 
   .emoji-option-small {
     font-size: 1.4rem;
-    padding: 0.45rem;
+    padding: 0;
   }
 
   .create-user-form,
@@ -1450,6 +1484,37 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
   .user-order-buttons {
     margin-right: 0.5rem;
     gap: 0.2rem;
+  }
+
+  .routine-type-selector {
+    gap: 0.4rem;
+    padding: 0.5rem;
+  }
+
+  .routine-type-selector label {
+    padding: 0.45rem 0.25rem;
+    font-size: 0.85rem;
+    gap: 0.25rem;
+  }
+
+  .routine-type-selector input[type="radio"] {
+    width: 14px;
+    height: 14px;
+  }
+
+  .user-info-card {
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+  }
+
+  .user-card-actions {
+    gap: 0.35rem;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -1471,17 +1536,17 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
   .emoji-selector,
   .emoji-selector-small {
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.35rem;
+    gap: 0.4rem;
   }
 
   .emoji-option {
-    font-size: 1.5rem;
-    padding: 0.4rem;
+    font-size: 1.6rem;
+    padding: 0;
   }
 
   .emoji-option-small {
     font-size: 1.3rem;
-    padding: 0.35rem;
+    padding: 0;
   }
 
   .routine-type-selector {
@@ -1620,7 +1685,7 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
 
 .emoji-option {
   font-size: 2rem;
-  padding: 1rem;
+  padding: 0;
   background: var(--bg-tertiary);
   border: 3px solid var(--border-color);
   border-radius: 12px;
@@ -1631,8 +1696,10 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
   align-items: center;
   justify-content: center;
   min-width: 0;
+  width: 100%;
   box-sizing: border-box;
   aspect-ratio: 1 / 1;
+  height: auto;
 }
 
 .emoji-option:hover {
@@ -1808,4 +1875,75 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
 
 .toggle-button:hover {
   opacity: 0.9;
+}
+
+/* Routine Statistics */
+.routine-stats {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+}
+
+.routine-stats h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.routine-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.routine-stat-item {
+  padding: 1rem;
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+  border: 2px solid var(--border-color);
+}
+
+.routine-stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.routine-stat-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.routine-stat-percentage {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+.routine-stat-progress {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.routine-stat-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, #2563eb, #60a5fa);
+  transition: width 0.3s ease;
+  border-radius: 10px;
+}
+
+.routine-stat-count {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: right;
 }

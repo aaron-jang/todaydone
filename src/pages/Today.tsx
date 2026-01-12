@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { db, initializeTodayLogs, getAllUsers } from '../lib/db';
 import { getTodayString } from '../lib/date';
 import { DailyLog, Routine, User } from '../lib/models';
@@ -13,6 +14,7 @@ interface UserLogsGroup {
 }
 
 export default function Today() {
+  const { t } = useTranslation();
   const [userGroups, setUserGroups] = useState<UserLogsGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const todayString = getTodayString();
@@ -121,7 +123,7 @@ export default function Today() {
     const total = logs.length;
     const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
-    let text = `🎉 ${todayString} 루틴 현황\n\n`;
+    let text = t('share.title', { date: todayString }) + '\n\n';
     text += `${user.emoji} ${user.name}\n\n`;
 
     // 각 루틴별 상세 정보
@@ -137,19 +139,19 @@ export default function Today() {
         const current = log.spentMinutes || 0;
         const target = log.routine.targetMinutes || 0;
         text += `${checkmark} ${log.routine.title}\n`;
-        text += `   ⏱️ ${current}/${target}분\n`;
+        text += `   ⏱️ ${current}/${target}${t('today.minutes')}\n`;
       } else if (log.routine.type === 'count') {
         const current = log.currentCount || 0;
         const target = log.routine.targetCount || 0;
         text += `${checkmark} ${log.routine.title}\n`;
-        text += `   🔢 ${current}/${target}회\n`;
+        text += `   🔢 ${current}/${target}${t('today.times')}\n`;
       }
     });
 
-    text += `\n진행률: ${completed}/${total} (${progress}%)\n`;
+    text += '\n' + t('share.progress', { completed, total, percent: progress }) + '\n';
 
     if (progress === 100) {
-      text += `\n🎉 완벽해요! 🎉`;
+      text += '\n' + t('share.perfectMessage');
     }
 
     return text;
@@ -162,13 +164,13 @@ export default function Today() {
       // Web Share API 지원 확인
       if (navigator.share) {
         await navigator.share({
-          title: `${user.name}의 루틴 현황`,
+          title: t('today.userRoutines', { name: user.name }),
           text: shareText
         });
       } else {
         // Fallback: 클립보드 복사
         await navigator.clipboard.writeText(shareText);
-        alert('클립보드에 복사되었습니다!');
+        alert(t('share.copied'));
       }
     } catch (error) {
       // 사용자가 공유를 취소한 경우 등
@@ -177,24 +179,24 @@ export default function Today() {
         // Fallback으로 클립보드 복사 시도
         try {
           await navigator.clipboard.writeText(shareText);
-          alert('클립보드에 복사되었습니다!');
+          alert(t('share.copied'));
         } catch (clipboardError) {
           console.error('클립보드 복사 실패:', clipboardError);
-          alert('공유에 실패했습니다.');
+          alert(t('share.failed'));
         }
       }
     }
   }
 
   if (loading) {
-    return <div className="container">불러오는 중...</div>;
+    return <div className="container">{t('today.loading')}</div>;
   }
 
   if (userGroups.length === 0) {
     return (
       <div className="container">
-        <h1>📅 {todayString}</h1>
-        <p>가족을 먼저 추가해주세요! 설정 페이지에서 가족을 추가할 수 있어요. 😊</p>
+        <h1>{t('today.title', { date: todayString })}</h1>
+        <p>{t('today.noFamily')}</p>
       </div>
     );
   }
@@ -206,13 +208,13 @@ export default function Today() {
 
   return (
     <div className="container">
-      <h1>📅 {todayString}</h1>
+      <h1>{t('today.title', { date: todayString })}</h1>
 
       {totalCount > 0 && (
         <div className="progress-summary">
           <div className="progress-header">
             <span className="progress-text">
-              전체 진행률 {totalCompleted} / {totalCount}
+              {t('today.overallProgress')} {totalCompleted} / {totalCount}
             </span>
             <span className="progress-percentage">{Math.round(overallProgress)}%</span>
           </div>
@@ -224,7 +226,7 @@ export default function Today() {
           </div>
           {overallProgress === 100 && (
             <div className="celebration-message">
-              🎉 완벽해요! 오늘도 최고예요! 🎉
+              {t('today.perfect')}
             </div>
           )}
         </div>
@@ -242,14 +244,14 @@ export default function Today() {
           <div key={group.user.id} className="user-section">
             <div className="user-section-header">
               <span className="user-section-emoji">{group.user.emoji}</span>
-              <span className="user-section-name">{group.user.name}의 루틴</span>
+              <span className="user-section-name">{t('today.userRoutines', { name: group.user.name })}</span>
               <span className="user-section-progress">
                 {userCompleted}/{userTotal}
               </span>
               <button
                 onClick={() => shareRoutines(group.user, group.logs)}
                 className="btn-share"
-                title="공유하기"
+                title={t('today.share')}
               >
                 📤
               </button>
@@ -257,7 +259,7 @@ export default function Today() {
 
             {userProgress === 100 && userTotal > 0 && (
               <div className="user-celebration-message">
-                🎉 {group.user.name}님 완벽해요! 🎉
+                {t('today.userPerfect', { name: group.user.name })}
               </div>
             )}
 
@@ -289,7 +291,7 @@ export default function Today() {
                             <div className="time-header">
                               <span className={log.done ? 'done' : ''}>{log.routine.title}</span>
                               <span className="time-progress-text">
-                                ⏱ {log.spentMinutes || 0} / {log.routine.targetMinutes} 분
+                                ⏱ {log.spentMinutes || 0} / {log.routine.targetMinutes} {t('today.minutes')}
                               </span>
                             </div>
                             <div className="time-progress-bar-container">
@@ -313,7 +315,7 @@ export default function Today() {
                           )}
                           {log.done && (
                             <div className="time-completed-badge">
-                              ✨ 완료!
+                              {t('today.completed')}
                             </div>
                           )}
                         </div>
@@ -325,7 +327,7 @@ export default function Today() {
                             <div className="time-header">
                               <span className={log.done ? 'done' : ''}>{log.routine.title}</span>
                               <span className="time-progress-text">
-                                🔢 {log.currentCount || 0} / {log.routine.targetCount} 회
+                                🔢 {log.currentCount || 0} / {log.routine.targetCount} {t('today.times')}
                               </span>
                             </div>
                             <div className="time-progress-bar-container">
@@ -348,7 +350,7 @@ export default function Today() {
                           )}
                           {log.done && (
                             <div className="time-completed-badge">
-                              ✨ 완료!
+                              {t('today.completed')}
                             </div>
                           )}
                         </div>
@@ -363,7 +365,7 @@ export default function Today() {
       })}
 
       {totalCount === 0 && (
-        <p>활성화된 루틴이 없어요. 루틴 페이지에서 추가해주세요! 😊</p>
+        <p>{t('today.noRoutines')}</p>
       )}
     </div>
   );

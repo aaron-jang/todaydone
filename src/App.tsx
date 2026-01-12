@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Today from './pages/Today';
 import Routines from './pages/Routines';
 import History from './pages/History';
@@ -14,12 +15,17 @@ import {
   requestNotificationPermission,
   saveNotificationSettings,
 } from './lib/notifications';
+import { initializeSeo } from './lib/seo';
 import './App.css';
 
 function App() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
+    // Initialize SEO tags based on language
+    initializeSeo();
+
     // Initialize dark mode on app load
     const saved = localStorage.getItem('darkMode');
     if (saved !== null) {
@@ -110,10 +116,10 @@ function App() {
   return (
     <div className="app">
       <nav className="nav">
-        <Link to="/">✨ 오늘</Link>
-        <Link to="/routines">📝 루틴</Link>
-        <Link to="/history">📊 기록</Link>
-        <Link to="/settings">⚙️ 설정</Link>
+        <Link to="/">✨ {t('nav.today')}</Link>
+        <Link to="/routines">📝 {t('nav.routines')}</Link>
+        <Link to="/history">📊 {t('nav.history')}</Link>
+        <Link to="/settings">⚙️ {t('nav.settings')}</Link>
       </nav>
 
       <main className="main">

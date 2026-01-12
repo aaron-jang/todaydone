@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { exportData, importData, resetDatabase, getAllUsers, createUser, updateUser, deleteUser, moveUserUp, moveUserDown } from '../lib/db';
 import { User } from '../lib/models';
 import {
@@ -9,6 +10,7 @@ import {
 } from '../lib/notifications';
 
 export default function Settings() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState<User[]>([]);
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
@@ -78,15 +80,13 @@ export default function Settings() {
     const user = users.find(u => u.id === userId);
     if (!user) return;
 
-    if (!confirm(`${user.name}님의 모든 루틴과 기록을 삭제할까요? 되돌릴 수 없어요!`)) return;
+    if (!confirm(t('settings.deleteConfirm'))) return;
 
     try {
       await deleteUser(userId);
       await loadUsers();
-      alert('삭제했어요');
     } catch (error) {
       console.error('Delete user failed:', error);
-      alert('삭제에 실패했어요 😢');
     }
   }
 
@@ -127,10 +127,10 @@ export default function Settings() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      alert('데이터를 성공적으로 저장했어요! 📦');
+      alert(t('settings.exportSuccess'));
     } catch (error) {
       console.error('Export failed:', error);
-      alert('저장에 실패했어요 😢');
+      alert(t('settings.exportFailed'));
     }
   }
 
@@ -146,11 +146,11 @@ export default function Settings() {
       try {
         const text = await file.text();
         await importData(text);
-        alert('데이터를 불러왔어요! 페이지를 새로고침할게요 ✨');
+        alert(t('settings.importSuccess'));
         window.location.reload();
       } catch (error) {
         console.error('Import failed:', error);
-        alert('불러오기에 실패했어요. 파일을 확인해주세요 😢');
+        alert(t('settings.importFailed'));
       }
     };
 
@@ -158,15 +158,15 @@ export default function Settings() {
   }
 
   async function handleReset() {
-    if (!confirm('모든 데이터를 삭제할까요? 되돌릴 수 없어요! ⚠️')) return;
+    if (!confirm(t('settings.resetConfirm'))) return;
 
     try {
       await resetDatabase();
-      alert('모든 데이터를 삭제했어요. 페이지를 새로고침할게요 🔄');
+      alert(t('settings.resetSuccess'));
       window.location.reload();
     } catch (error) {
       console.error('Reset failed:', error);
-      alert('삭제에 실패했어요 😢');
+      alert(t('settings.resetFailed'));
     }
   }
 
@@ -179,9 +179,9 @@ export default function Settings() {
         setNotificationSettings(newSettings);
         saveNotificationSettings(newSettings);
         setNotificationPermission('granted');
-        alert('알림이 활성화되었어요! 매일 아침 8시에 알림을 받을 수 있어요 🔔');
+        alert(t('settings.notificationEnabled'));
       } else {
-        alert('알림 권한이 필요해요. 브라우저 설정에서 알림을 허용해주세요.');
+        alert(t('settings.notificationPermission'));
       }
     } else {
       // Disabling notifications
@@ -199,10 +199,10 @@ export default function Settings() {
 
   return (
     <div className="container">
-      <h1>⚙️ 설정</h1>
+      <h1>{t('settings.title')}</h1>
 
       <div className="settings-section">
-        <h2>👨‍👩‍👧‍👦 가족 관리</h2>
+        <h2>{t('settings.familyManagement')}</h2>
 
         <div className="current-users-list">
           {users.map((user, index) => (
@@ -211,17 +211,17 @@ export default function Settings() {
                 <div className="user-edit-card">
                   <div className="user-edit-form">
                     <div className="form-group">
-                      <label>이름</label>
+                      <label>{t('settings.name')}</label>
                       <input
                         type="text"
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        placeholder="이름 입력"
+                        placeholder={t('settings.namePlaceholder')}
                       />
                     </div>
 
                     <div className="form-group">
-                      <label>이모지 선택</label>
+                      <label>{t('settings.emojiSelect')}</label>
                       <div className="emoji-selector-small">
                         {emojiOptions.map((emoji) => (
                           <button
@@ -237,10 +237,10 @@ export default function Settings() {
 
                     <div className="user-edit-actions">
                       <button onClick={saveEdit} className="btn-primary">
-                        ✅ 저장
+                        {t('settings.complete')}
                       </button>
                       <button onClick={cancelEdit} className="btn-secondary">
-                        취소
+                        {t('settings.cancel')}
                       </button>
                     </div>
                   </div>
@@ -252,7 +252,7 @@ export default function Settings() {
                       onClick={() => handleMoveUserUp(user.id)}
                       disabled={index === 0}
                       className="btn-order"
-                      title="위로"
+                      title={t('settings.moveUp')}
                     >
                       ⬆️
                     </button>
@@ -260,7 +260,7 @@ export default function Settings() {
                       onClick={() => handleMoveUserDown(user.id)}
                       disabled={index === users.length - 1}
                       className="btn-order"
-                      title="아래로"
+                      title={t('settings.moveDown')}
                     >
                       ⬇️
                     </button>
@@ -269,10 +269,10 @@ export default function Settings() {
                   <span className="user-info-name">{user.name}</span>
                   <div className="user-card-actions">
                     <button onClick={() => startEdit(user)} className="btn-edit">
-                      ✏️ 수정
+                      {t('settings.edit')}
                     </button>
                     <button onClick={() => handleDeleteUser(user.id)} className="btn-delete">
-                      🗑️ 삭제
+                      {t('settings.delete')}
                     </button>
                   </div>
                 </div>
@@ -283,21 +283,21 @@ export default function Settings() {
 
         {!showCreateForm && (
           <button onClick={() => setShowCreateForm(true)} className="btn-primary" style={{ width: '100%', marginTop: '1rem' }}>
-            ➕ 가족 추가하기
+            {t('settings.addFamily')}
           </button>
         )}
 
         {showCreateForm && (
           <div className="create-user-form" style={{ marginTop: '1rem' }}>
-            <h3>새 가족 추가하기</h3>
+            <h3>{t('settings.newFamily')}</h3>
 
             <div className="form-group">
-              <label>이름</label>
+              <label>{t('settings.name')}</label>
               <input
                 type="text"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                placeholder="이름을 입력하세요 (예: 엄마, 수아)"
+                placeholder={t('settings.namePlaceholder')}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
@@ -308,7 +308,7 @@ export default function Settings() {
             </div>
 
             <div className="form-group">
-              <label>이모지 선택</label>
+              <label>{t('settings.emojiSelect')}</label>
               <div className="emoji-selector">
                 {emojiOptions.map((emoji) => (
                   <button
@@ -325,10 +325,10 @@ export default function Settings() {
 
             <div className="form-buttons">
               <button type="button" className="btn-primary" onClick={handleCreateUser}>
-                ✅ 완료
+                {t('settings.complete')}
               </button>
               <button type="button" className="btn-secondary" onClick={cancelCreate}>
-                취소
+                {t('settings.cancel')}
               </button>
             </div>
           </div>
@@ -336,43 +336,31 @@ export default function Settings() {
       </div>
 
       <div className="settings-section" style={{ marginTop: '1.5rem' }}>
-        <h2>📱 데이터 관리</h2>
+        <h2>{t('settings.dataManagement')}</h2>
 
         <div className="settings-buttons">
           <button onClick={handleExport} className="btn-primary">
-            💾 데이터 내보내기
+            {t('settings.exportData')}
           </button>
 
           <button onClick={handleImport} className="btn-secondary">
-            📥 데이터 가져오기
+            {t('settings.importData')}
           </button>
 
           <button onClick={handleReset} className="btn-danger">
-            🗑️ 모두 삭제하기
+            {t('settings.resetData')}
           </button>
-        </div>
-
-        <div className="settings-info">
-          <p>
-            <strong>💾 내보내기:</strong> 모든 데이터를 파일로 저장해요.
-          </p>
-          <p>
-            <strong>📥 가져오기:</strong> 저장한 파일에서 데이터를 불러와요.
-          </p>
-          <p>
-            <strong>🗑️ 삭제하기:</strong> 모든 루틴과 기록을 삭제해요. (되돌릴 수 없어요!)
-          </p>
         </div>
       </div>
 
       <div className="settings-section" style={{ marginTop: '1.5rem' }}>
-        <h2>🎨 테마 설정</h2>
+        <h2>{t('settings.darkMode')}</h2>
 
         <div className="dark-mode-toggle">
           <div className="dark-mode-info">
-            <span className="dark-mode-label">{darkMode ? '🌙 다크모드' : '☀️ 라이트모드'}</span>
+            <span className="dark-mode-label">{t('settings.darkMode')}</span>
             <p className="dark-mode-description">
-              {darkMode ? '어두운 배경으로 눈이 편안해요' : '밝은 배경으로 화면이 또렷해요'}
+              {t('settings.darkModeDesc')}
             </p>
           </div>
           <button onClick={toggleDarkMode} className={`toggle-button ${darkMode ? 'active' : ''}`}>
@@ -382,18 +370,16 @@ export default function Settings() {
       </div>
 
       <div className="settings-section" style={{ marginTop: '1.5rem' }}>
-        <h2>🔔 알림 설정</h2>
+        <h2>{t('settings.notifications')}</h2>
 
         <div className="notification-settings">
           <div className="dark-mode-toggle">
             <div className="dark-mode-info">
               <span className="dark-mode-label">
-                {notificationSettings.enabled ? '🔔 알림 켜짐' : '🔕 알림 꺼짐'}
+                {t('settings.morningAlarm')}
               </span>
               <p className="dark-mode-description">
-                {notificationSettings.enabled
-                  ? '매일 정해진 시간에 알림을 받아요'
-                  : '알림을 받지 않아요'}
+                {t('settings.morningAlarmDesc')}
               </p>
             </div>
             <button
@@ -408,7 +394,7 @@ export default function Settings() {
           {notificationSettings.enabled && (
             <div className="notification-time-setting" style={{ marginTop: '1rem' }}>
               <label htmlFor="notification-time" className="notification-time-label">
-                알림 시간 설정
+                {t('settings.notificationTime')}
               </label>
               <input
                 id="notification-time"
@@ -417,26 +403,14 @@ export default function Settings() {
                 onChange={(e) => handleTimeChange(e.target.value)}
                 className="notification-time-input"
               />
-              <p className="notification-time-description">
-                매일 {notificationSettings.time}에 루틴 알림을 받아요
-              </p>
             </div>
           )}
 
           {notificationPermission === 'denied' && (
             <div className="notification-warning">
-              ⚠️ 알림이 차단되었어요. 브라우저 설정에서 알림을 허용해주세요.
+              {t('settings.notificationPermission')}
             </div>
           )}
-
-          <div className="settings-info" style={{ marginTop: '1rem' }}>
-            <p>
-              <strong>💡 알림 안내:</strong> 웹 브라우저 알림으로 매일 정해진 시간에 루틴을 확인할 수 있어요.
-            </p>
-            <p>
-              <strong>📱 참고:</strong> 일부 브라우저에서는 앱이 닫혀있을 때 알림이 오지 않을 수 있어요.
-            </p>
-          </div>
         </div>
       </div>
     </div>

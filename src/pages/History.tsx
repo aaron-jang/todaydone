@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { db, getAllUsers } from '../lib/db';
 import { getRecentDates, getTodayString } from '../lib/date';
 import { User } from '../lib/models';
@@ -9,13 +10,23 @@ interface DayStats {
   total: number;
 }
 
+interface RoutineStats {
+  routineId: string;
+  title: string;
+  completed: number;
+  total: number;
+  percentage: number;
+}
+
 interface UserHistoryGroup {
   user: User;
   stats: DayStats[];
   streak: number;
+  routineStats: RoutineStats[];
 }
 
 export default function History() {
+  const { t } = useTranslation();
   const [userGroups, setUserGroups] = useState<UserHistoryGroup[]>([]);
   const [expandedUsers, setExpandedUsers] = useState<Set<string>>(new Set());
 
@@ -79,12 +90,67 @@ export default function History() {
         }
 
         const streak = calculateStreak(dayStats);
+        const routineStats = await calculateRoutineStats(user.id, recentDates);
 
-        return { user, stats: dayStats, streak };
+        return { user, stats: dayStats, streak, routineStats };
       })
     );
 
     setUserGroups(groups);
+  }
+
+  async function calculateRoutineStats(userId: string, dates: string[]): Promise<RoutineStats[]> {
+    // Get all active routines for this user
+    const routines = await db.routines
+      .filter(r => r.isActive && r.userId === userId)
+      .toArray();
+
+    const statsMap = new Map<string, { completed: number; total: number }>();
+
+    // Calculate stats for each routine
+    for (const date of dates) {
+      const logs = await db.dailyLogs
+        .where('date')
+        .equals(date)
+        .filter(log => log.userId === userId)
+        .toArray();
+
+      for (const routine of routines) {
+        // Check if routine existed on this date
+        const routineDate = routine.createdAt.split('T')[0];
+        if (routineDate > date) continue;
+
+        const log = logs.find(l => l.routineId === routine.id);
+
+        if (!statsMap.has(routine.id)) {
+          statsMap.set(routine.id, { completed: 0, total: 0 });
+        }
+
+        const stats = statsMap.get(routine.id)!;
+        stats.total++;
+        if (log && log.done) {
+          stats.completed++;
+        }
+      }
+    }
+
+    // Convert to RoutineStats array
+    const routineStats: RoutineStats[] = [];
+    for (const routine of routines) {
+      const stats = statsMap.get(routine.id);
+      if (stats && stats.total > 0) {
+        routineStats.push({
+          routineId: routine.id,
+          title: routine.title,
+          completed: stats.completed,
+          total: stats.total,
+          percentage: Math.round((stats.completed / stats.total) * 100)
+        });
+      }
+    }
+
+    // Sort by percentage descending
+    return routineStats.sort((a, b) => b.percentage - a.percentage);
   }
 
 
@@ -114,15 +180,15 @@ export default function History() {
   if (userGroups.length === 0) {
     return (
       <div className="container">
-        <h1>📊 기록</h1>
-        <p>가족을 먼저 추가해주세요! 설정 페이지에서 가족을 추가할 수 있어요. 😊</p>
+        <h1>{t('history.title')}</h1>
+        <p>{t('history.noFamily')}</p>
       </div>
     );
   }
 
   return (
     <div className="container">
-      <h1>📊 우리 가족 기록</h1>
+      <h1>{t('history.title')}</h1>
 
       {userGroups.map((group) => {
         const isExpanded = expandedUsers.has(group.user.id);
@@ -132,11 +198,11 @@ export default function History() {
           <div key={group.user.id} className="user-section">
             <div className="user-section-header">
               <span className="user-section-emoji">{group.user.emoji}</span>
-              <span className="user-section-name">{group.user.name}의 기록</span>
+              <span className="user-section-name">{t('history.userHistory', { name: group.user.name })}</span>
             </div>
 
             <div className="streak-display">
-              <h2>🔥 연속 달성: {group.streak}일!</h2>
+              <h2>{t('history.streak', { count: group.streak })}</h2>
             </div>
 
             <div className="history-list">
@@ -156,8 +222,34 @@ export default function History() {
                 onClick={() => toggleExpanded(group.user.id)}
                 className="btn-expand"
               >
-                {isExpanded ? '📖 간단히 보기' : '📋 상세보기 (전체 ' + group.stats.length + '일)'}
+                {isExpanded ? t('history.showLess') : t('history.showMore', { count: group.stats.length })}
               </button>
+            )}
+
+            {/* Routine Statistics */}
+            {group.routineStats.length > 0 && (
+              <div className="routine-stats">
+                <h3>{t('history.routineStats')}</h3>
+                <div className="routine-stats-list">
+                  {group.routineStats.map((stat) => (
+                    <div key={stat.routineId} className="routine-stat-item">
+                      <div className="routine-stat-header">
+                        <span className="routine-stat-title">{stat.title}</span>
+                        <span className="routine-stat-percentage">{stat.percentage}%</span>
+                      </div>
+                      <div className="routine-stat-progress">
+                        <div
+                          className="routine-stat-progress-fill"
+                          style={{ width: `${stat.percentage}%` }}
+                        />
+                      </div>
+                      <div className="routine-stat-count">
+                        {stat.completed} / {stat.total}{t('history.days')}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
         );

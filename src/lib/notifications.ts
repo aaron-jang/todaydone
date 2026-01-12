@@ -1,4 +1,5 @@
 // Notification utility for daily reminders
+import i18n from '../i18n/config';
 
 export interface NotificationSettings {
   enabled: boolean;
@@ -134,26 +135,10 @@ export function scheduleNotificationCheck(callback: () => void): number {
 }
 
 export function getNotificationMessage(): { title: string; body: string } {
-  const messages = [
-    {
-      title: '🌅 좋은 아침이에요!',
-      body: '오늘의 루틴을 시작해볼까요? 화이팅!',
-    },
-    {
-      title: '✨ 새로운 하루가 시작됐어요!',
-      body: '오늘도 루틴을 완성해봐요!',
-    },
-    {
-      title: '🎯 오늘의 목표를 확인하세요!',
-      body: '루틴 체크로 하루를 시작해보세요!',
-    },
-    {
-      title: '💪 화이팅! 오늘도 할 수 있어요!',
-      body: '오늘의 루틴을 확인하러 가볼까요?',
-    },
-  ];
+  // Get translated messages from i18n
+  const messages = i18n.t('notifications.messages', { returnObjects: true }) as Array<{ title: string; body: string }>;
 
-  // Random message
+  // Return random message
   return messages[Math.floor(Math.random() * messages.length)];
 }
 

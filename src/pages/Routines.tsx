@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { db, getAllUsers, moveRoutineUp, moveRoutineDown } from '../lib/db';
 import { Routine, User } from '../lib/models';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,6 +10,7 @@ interface UserRoutinesGroup {
 }
 
 export default function Routines() {
+  const { t } = useTranslation();
   const [userGroups, setUserGroups] = useState<UserRoutinesGroup[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<string>('');
   const [newTitle, setNewTitle] = useState('');
@@ -80,7 +82,7 @@ export default function Routines() {
   }
 
   async function deleteRoutine(id: string) {
-    if (!confirm('이 루틴을 삭제할까요?')) return;
+    if (!confirm(t('routines.deleteConfirm'))) return;
 
     await db.routines.delete(id);
     await loadRoutines();
@@ -99,19 +101,19 @@ export default function Routines() {
   if (userGroups.length === 0) {
     return (
       <div className="container">
-        <h1>📝 루틴</h1>
-        <p>가족을 먼저 추가해주세요! 설정 페이지에서 가족을 추가할 수 있어요. 😊</p>
+        <h1>{t('routines.title')}</h1>
+        <p>{t('routines.noFamily')}</p>
       </div>
     );
   }
 
   return (
     <div className="container">
-      <h1>📝 루틴 관리</h1>
+      <h1>{t('routines.title')}</h1>
 
       <div className="add-routine">
         <div className="user-selector">
-          <label>누구의 루틴을 추가할까요?</label>
+          <label>{t('routines.selectUser')}</label>
           <select
             value={selectedUserId}
             onChange={(e) => setSelectedUserId(e.target.value)}
@@ -128,7 +130,7 @@ export default function Routines() {
           type="text"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
-          placeholder="루틴 이름을 입력하세요 (예: 양치하기, 독서하기)"
+          placeholder={t('routines.inputPlaceholder')}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault();
@@ -145,7 +147,7 @@ export default function Routines() {
               checked={newType === 'check'}
               onChange={(e) => setNewType(e.target.value as 'check' | 'time' | 'count')}
             />
-            ✅ 체크
+            {t('routines.typeCheck')}
           </label>
           <label>
             <input
@@ -154,7 +156,7 @@ export default function Routines() {
               checked={newType === 'time'}
               onChange={(e) => setNewType(e.target.value as 'check' | 'time' | 'count')}
             />
-            ⏱️ 시간
+            {t('routines.typeTime')}
           </label>
           <label>
             <input
@@ -163,14 +165,14 @@ export default function Routines() {
               checked={newType === 'count'}
               onChange={(e) => setNewType(e.target.value as 'check' | 'time' | 'count')}
             />
-            🔢 횟수
+            {t('routines.typeCount')}
           </label>
         </div>
 
         {newType === 'time' && (
           <div className="target-minutes">
             <label>
-              목표 시간 (분):
+              {t('routines.targetMinutes')}
               <input
                 type="number"
                 value={newTargetMinutes}
@@ -184,7 +186,7 @@ export default function Routines() {
         {newType === 'count' && (
           <div className="target-minutes">
             <label>
-              목표 횟수:
+              {t('routines.targetCount')}
               <input
                 type="number"
                 value={newTargetCount}
@@ -195,19 +197,19 @@ export default function Routines() {
           </div>
         )}
 
-        <button type="button" onClick={addRoutine}>➕ 추가하기</button>
+        <button type="button" onClick={addRoutine}>{t('routines.addButton')}</button>
       </div>
 
       {userGroups.map((group) => (
         <div key={group.user.id} className="user-section">
           <div className="user-section-header">
             <span className="user-section-emoji">{group.user.emoji}</span>
-            <span className="user-section-name">{group.user.name}의 루틴</span>
-            <span className="user-section-count">{group.routines.length}개</span>
+            <span className="user-section-name">{t('routines.userRoutines', { name: group.user.name })}</span>
+            <span className="user-section-count">{t('routines.routineCount', { count: group.routines.length })}</span>
           </div>
 
           {group.routines.length === 0 ? (
-            <p className="no-routines-message">아직 루틴이 없어요</p>
+            <p className="no-routines-message">{t('routines.noRoutines')}</p>
           ) : (
             <div className="routine-list">
               {group.routines.map((routine, index) => (
@@ -217,7 +219,7 @@ export default function Routines() {
                       onClick={() => handleMoveRoutineUp(routine.id)}
                       disabled={index === 0}
                       className="btn-order"
-                      title="위로"
+                      title={t('routines.moveUp')}
                     >
                       ⬆️
                     </button>
@@ -225,7 +227,7 @@ export default function Routines() {
                       onClick={() => handleMoveRoutineDown(routine.id)}
                       disabled={index === group.routines.length - 1}
                       className="btn-order"
-                      title="아래로"
+                      title={t('routines.moveDown')}
                     >
                       ⬇️
                     </button>
@@ -234,20 +236,20 @@ export default function Routines() {
                     <span className={routine.isActive ? '' : 'inactive'}>{routine.title}</span>
                     {routine.type === 'time' && (
                       <span className="routine-meta">
-                        ⏱ {routine.targetMinutes}분
+                        ⏱ {routine.targetMinutes}{t('today.minutes')}
                       </span>
                     )}
                     {routine.type === 'count' && (
                       <span className="routine-meta">
-                        🔢 {routine.targetCount}회
+                        🔢 {routine.targetCount}{t('today.times')}
                       </span>
                     )}
                   </div>
                   <div className="routine-actions">
                     <button onClick={() => toggleActive(routine)}>
-                      {routine.isActive ? '❌ 비활성화' : '✅ 활성화'}
+                      {routine.isActive ? t('routines.deactivate') : t('routines.activate')}
                     </button>
-                    <button onClick={() => deleteRoutine(routine.id)}>🗑️ 삭제</button>
+                    <button onClick={() => deleteRoutine(routine.id)}>{t('routines.delete')}</button>
                   </div>
                 </div>
               ))}

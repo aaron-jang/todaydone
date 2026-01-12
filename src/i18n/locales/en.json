@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "today": "Today",
+    "routines": "Routines",
+    "history": "History",
+    "settings": "Settings"
+  },
+  "today": {
+    "title": "📅 {{date}}",
+    "loading": "Loading...",
+    "noFamily": "Please add family members first! You can add them in the Settings page. 😊",
+    "noRoutines": "No active routines. Please add some in the Routines page! 😊",
+    "overallProgress": "Overall Progress",
+    "perfect": "🎉 Perfect! Great job today! 🎉",
+    "userPerfect": "🎉 Perfect, {{name}}! 🎉",
+    "userRoutines": "{{name}}'s Routines",
+    "share": "Share",
+    "completed": "✨ Completed!",
+    "minutes": "min",
+    "times": "times"
+  },
+  "routines": {
+    "title": "📝 Routine Management",
+    "noFamily": "Please add family members first! You can add them in the Settings page. 😊",
+    "selectUser": "Whose routine would you like to add?",
+    "inputPlaceholder": "Enter routine name (e.g., Brush teeth, Read)",
+    "typeCheck": "✅ Check",
+    "typeTime": "⏱️ Time",
+    "typeCount": "🔢 Count",
+    "targetMinutes": "Target time (minutes):",
+    "targetCount": "Target count:",
+    "addButton": "➕ Add Routine",
+    "userRoutines": "{{name}}'s Routines",
+    "routineCount": "{{count}} routines",
+    "noRoutines": "No routines yet",
+    "deactivate": "❌ Deactivate",
+    "activate": "✅ Activate",
+    "delete": "🗑️ Delete",
+    "deleteConfirm": "Delete this routine?",
+    "moveUp": "Move up",
+    "moveDown": "Move down"
+  },
+  "history": {
+    "title": "📊 Family History",
+    "noFamily": "Please add family members first! You can add them in the Settings page. 😊",
+    "userHistory": "{{name}}'s History",
+    "streak": "🔥 Streak: {{count}} days!",
+    "showLess": "📖 Show Less",
+    "showMore": "📋 Show More ({{count}} days total)",
+    "routineStats": "📈 Routine Statistics",
+    "days": "days"
+  },
+  "settings": {
+    "title": "⚙️ Settings",
+    "familyManagement": "👨‍👩‍👧‍👦 Family Management",
+    "addFamily": "➕ Add Family Member",
+    "newFamily": "Add New Family Member",
+    "name": "Name",
+    "namePlaceholder": "Enter name (e.g., Mom, Sarah)",
+    "emojiSelect": "Select Emoji",
+    "complete": "✅ Done",
+    "cancel": "Cancel",
+    "edit": "✏️ Edit",
+    "delete": "🗑️ Delete",
+    "deleteConfirm": "Are you sure? All routines and records for this family member will be deleted!",
+    "darkMode": "🌙 Dark Mode",
+    "darkModeDesc": "Switch to dark theme",
+    "notifications": "🔔 Notification Settings",
+    "morningAlarm": "Morning Alarm",
+    "morningAlarmDesc": "Get notified at your set time every day",
+    "notificationTime": "Notification Time",
+    "enableNotifications": "Enable Notifications",
+    "disableNotifications": "Disable Notifications",
+    "notificationEnabled": "Notifications enabled! You'll receive reminders every morning at 8 AM 🔔",
+    "notificationPermission": "Notification permission required. Please enable notifications in your browser settings.",
+    "dataManagement": "📱 Data Management",
+    "exportData": "💾 Export Data",
+    "importData": "📥 Import Data",
+    "resetData": "🔄 Reset Data",
+    "exportSuccess": "Data exported successfully! 📦",
+    "exportFailed": "Export failed 😢",
+    "importSuccess": "Data imported! Refreshing page... ✨",
+    "importFailed": "Import failed. Please check the file 😢",
+    "resetConfirm": "Delete all data? This cannot be undone! ⚠️",
+    "resetSuccess": "All data deleted. Refreshing page... 🔄",
+    "resetFailed": "Reset failed 😢",
+    "moveUp": "Move up",
+    "moveDown": "Move down"
+  },
+  "share": {
+    "title": "🎉 {{date}} Routine Status",
+    "progress": "Progress: {{completed}}/{{total}} ({{percent}}%)",
+    "perfectMessage": "🎉 Perfect! 🎉",
+    "copied": "Copied to clipboard!",
+    "failed": "Share failed."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "notifications": {
+    "messages": [
+      {
+        "title": "🌅 Good Morning!",
+        "body": "Ready to start your routines today? Let's go!"
+      },
+      {
+        "title": "☀️ New Day!",
+        "body": "Let's start the day with healthy routines!"
+      },
+      {
+        "title": "🌤️ Good Morning!",
+        "body": "Shall we check today's tasks?"
+      },
+      {
+        "title": "✨ A New Day Begins!",
+        "body": "Let's complete our routines together today!"
+      },
+      {
+        "title": "🎯 Let's Go!",
+        "body": "One step at a time towards your goals!"
+      }
+    ]
+  },
+  "seo": {
+    "title": "Family Routines - Daily Routine Management App for Kids",
+    "description": "A fun routine management app for elementary students and parents. Check today's tasks, track time routines, and monitor your achievement streaks. Free PWA app available.",
+    "keywords": "routine management, kids, habit building, task management, checklist, time management, children's app, learning habits, daily routines, PWA",
+    "appName": "Family Routines",
+    "appShortName": "Routines",
+    "featureList": [
+      "Today's task checklist",
+      "Time routine tracking",
+      "Achievement streak records",
+      "Data backup/restore",
+      "Offline usage",
+      "PWA app installation"
+    ]
+  }
+}
