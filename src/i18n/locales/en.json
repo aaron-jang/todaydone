@@ -125,18 +125,85 @@
     ]
   },
   "seo": {
-    "title": "Family Routines - Daily Routine Management App for Kids",
-    "description": "A fun routine management app for elementary students and parents. Check today's tasks, track time routines, and monitor your achievement streaks. Free PWA app available.",
-    "keywords": "routine management, kids, habit building, task management, checklist, time management, children's app, learning habits, daily routines, PWA",
+    "title": "Family Routines - Daily Habit Checker & Routine Manager | TodayDone",
+    "description": "Easily manage your family's daily routines. Checklists, time tracking, count tracking and streak records — all in one free productivity tool. No sign-up required.",
+    "keywords": "routine management, habit tracker, daily checklist, kids habits, family routines, time management app, habit building, free productivity tool, offline app, PWA",
     "appName": "Family Routines",
     "appShortName": "Routines",
     "featureList": [
       "Today's task checklist",
-      "Time routine tracking",
+      "Time-based routine tracking",
+      "Count-based routine tracking",
       "Achievement streak records",
-      "Data backup/restore",
-      "Offline usage",
-      "PWA app installation"
+      "Per-family-member management",
+      "Data backup & restore",
+      "Offline usage (PWA)",
+      "Dark mode support",
+      "7 language support"
     ]
+  },
+  "seoLanding": {
+    "heading": "What is Family Routines?",
+    "intro": "Tired of nagging your kids about daily habits? 'Family Routines' is a daily routine management tool designed for families. Check off daily tasks, track time and count-based routines, and stay motivated with streak records — all without any sign-up.",
+    "problemHeading": "Problems We Solve",
+    "problems": [
+      "Keeping track of kids' habits like brushing teeth, reading, and exercise every day is tedious",
+      "You want to manage each family member's routines in one place at a glance",
+      "You want to record how many consecutive days routines were completed for motivation",
+      "You need a lightweight tool that works directly in the mobile browser without app store downloads"
+    ],
+    "howToHeading": "How to Use",
+    "howToSteps": [
+      {
+        "title": "1. Register Family Members",
+        "desc": "Add family members with names and emojis in the Settings page."
+      },
+      {
+        "title": "2. Create Routines",
+        "desc": "Choose from Check (yes/no), Time (target minutes), or Count (target reps) and register routines. E.g., Brush teeth (check), Reading (30 min), Jump rope (100 reps)."
+      },
+      {
+        "title": "3. Daily Check-ins",
+        "desc": "Check off completed routines on the Today page. Time and count routines can be logged with simple buttons."
+      },
+      {
+        "title": "4. View Records",
+        "desc": "Check streak records and per-routine completion stats on the History page."
+      },
+      {
+        "title": "5. Share Progress",
+        "desc": "Share today's routine progress with family and friends via messaging apps."
+      }
+    ],
+    "faqHeading": "Frequently Asked Questions",
+    "faqs": [
+      {
+        "q": "Do I need to sign up?",
+        "a": "No. You can use it right away without any sign-up or login. All data is stored securely on your device (browser)."
+      },
+      {
+        "q": "Can multiple family members use it together?",
+        "a": "Yes! Register multiple family members in Settings to manage each person's routines separately. See everyone's routines in one place."
+      },
+      {
+        "q": "Does it work offline?",
+        "a": "Yes, install it as a PWA (Progressive Web App) to use it without internet. Add it to your home screen to use like a regular app."
+      },
+      {
+        "q": "What if I lose my data?",
+        "a": "You can export backup files from Settings > Data Management. Regular backups ensure safe data restoration when switching devices or clearing browser cache."
+      },
+      {
+        "q": "Is there a notification feature?",
+        "a": "Yes, you can receive daily routine reminders at your preferred time. Set the notification time in Settings to get browser notifications every day."
+      }
+    ],
+    "notesHeading": "Notes",
+    "notes": [
+      "Data is stored in the browser (IndexedDB). Clearing cache may delete data — back up regularly.",
+      "Automatic sync across devices is not supported. Manual backup/restore is available.",
+      "Works best on modern browsers (Chrome, Safari, Firefox, Edge)."
+    ],
+    "poweredBy": "soosoo.life"
   }
 }

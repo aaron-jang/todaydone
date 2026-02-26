@@ -104,18 +104,8 @@ function updateStructuredData(): void {
     'ar': 'USD'
   };
 
-  // Language code mapping for inLanguage
-  const inLanguageMapping: Record<string, string> = {
-    'ko': 'ko-KR',
-    'en': 'en-US',
-    'ja': 'ja-JP',
-    'zh-CN': 'zh-CN',
-    'zh-TW': 'zh-TW',
-    'es': 'es-ES',
-    'ar': 'ar-SA'
-  };
-
-  const structuredData = {
+  // WebApplication structured data
+  const webAppData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": appName,
@@ -123,6 +113,7 @@ function updateStructuredData(): void {
     "description": description,
     "url": "https://soosoo.life/todaydone/",
     "applicationCategory": "ProductivityApplication",
+    "applicationSubCategory": "Habit Tracker",
     "operatingSystem": "All",
     "offers": {
       "@type": "Offer",
@@ -130,31 +121,62 @@ function updateStructuredData(): void {
       "priceCurrency": currencyMapping[currentLang] || 'USD'
     },
     "browserRequirements": "Requires JavaScript. Requires HTML5.",
-    "screenshot": "https://soosoo.life/todaydone/icon-512x512.png",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "ratingCount": "1"
-    },
+    "screenshot": "https://soosoo.life/todaydone/opengraph.png",
     "author": {
       "@type": "Organization",
-      "name": "TodayDone"
+      "name": "수수라이프",
+      "url": "https://soosoo.life"
     },
-    "inLanguage": inLanguageMapping[currentLang] || 'en-US',
-    "featureList": featureList
+    "inLanguage": ["ko-KR", "en-US", "ja-JP", "zh-CN", "zh-TW", "es-ES", "ar-SA"],
+    "featureList": featureList,
+    "softwareHelp": {
+      "@type": "CreativeWork",
+      "url": "https://soosoo.life/todaydone/"
+    }
   };
 
-  // Find existing script tag or create new one
-  let scriptTag = document.querySelector('script[type="application/ld+json"]') as HTMLScriptElement | null;
+  // FAQ structured data
+  interface FaqItem { q: string; a: string }
+  const faqs = i18n.t('seoLanding.faqs', { returnObjects: true }) as FaqItem[];
+  const faqData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.a
+      }
+    }))
+  };
 
-  if (scriptTag) {
-    scriptTag.textContent = JSON.stringify(structuredData, null, 2);
-  } else {
-    scriptTag = document.createElement('script');
+  // HowTo structured data
+  interface HowToStep { title: string; desc: string }
+  const steps = i18n.t('seoLanding.howToSteps', { returnObjects: true }) as HowToStep[];
+  const howToData = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": i18n.t('seoLanding.howToHeading'),
+    "description": description,
+    "step": steps.map((step, index) => ({
+      "@type": "HowToStep",
+      "position": index + 1,
+      "name": step.title,
+      "text": step.desc
+    }))
+  };
+
+  // Update all JSON-LD script tags
+  const scriptTags = document.querySelectorAll('script[type="application/ld+json"]');
+  scriptTags.forEach(tag => tag.remove());
+
+  [webAppData, faqData, howToData].forEach(data => {
+    const scriptTag = document.createElement('script');
     scriptTag.type = 'application/ld+json';
-    scriptTag.textContent = JSON.stringify(structuredData, null, 2);
+    scriptTag.textContent = JSON.stringify(data);
     document.head.appendChild(scriptTag);
-  }
+  });
 }
 
 /**

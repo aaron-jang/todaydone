@@ -138,5 +138,69 @@
       "Uso sin conexión",
       "Instalación de aplicación PWA"
     ]
+  },
+  "seoLanding": {
+    "heading": "¿Qué es Rutinas Familiares?",
+    "intro": "¿Cansado de recordarle a tus hijos sus hábitos diarios? 'Rutinas Familiares' es una herramienta de gestión de rutinas diarias diseñada para familias. Marca las tareas completadas, registra rutinas basadas en tiempo y repeticiones, y mantén la motivación con registros de rachas consecutivas. Sin registro, gratis y directamente en tu navegador móvil.",
+    "problemHeading": "Problemas que resolvemos",
+    "problems": [
+      "Es tedioso revisar los hábitos diarios de los niños como cepillarse los dientes, leer y hacer ejercicio",
+      "Quieres gestionar las rutinas de cada miembro de la familia en un solo lugar",
+      "Quieres registrar cuántos días consecutivos se completaron las rutinas para motivación",
+      "Necesitas una herramienta ligera que funcione directamente en el navegador móvil sin descargas"
+    ],
+    "howToHeading": "Cómo usar",
+    "howToSteps": [
+      {
+        "title": "1. Registrar miembros familiares",
+        "desc": "Agrega miembros familiares con nombres y emojis en la página de Configuración."
+      },
+      {
+        "title": "2. Crear rutinas",
+        "desc": "Elige entre Verificación (sí/no), Tiempo (minutos objetivo) o Conteo (repeticiones objetivo) y registra rutinas. Ej: Cepillarse los dientes (verificación), Lectura (30 min), Saltar la cuerda (100 veces)."
+      },
+      {
+        "title": "3. Check-in diario",
+        "desc": "Marca las rutinas completadas en la página de Hoy. Las rutinas de tiempo y conteo se registran fácilmente con botones."
+      },
+      {
+        "title": "4. Ver registros",
+        "desc": "Consulta los días consecutivos de logro y las estadísticas de completado por rutina en la página de Historial."
+      },
+      {
+        "title": "5. Compartir progreso",
+        "desc": "Comparte el progreso de las rutinas de hoy con familia y amigos por WhatsApp u otras aplicaciones de mensajería."
+      }
+    ],
+    "faqHeading": "Preguntas frecuentes (FAQ)",
+    "faqs": [
+      {
+        "q": "¿Necesito registrarme?",
+        "a": "No. Puedes usarlo inmediatamente sin registro ni inicio de sesión. Todos los datos se almacenan de forma segura en tu dispositivo (navegador)."
+      },
+      {
+        "q": "¿Pueden usarlo varios miembros de la familia?",
+        "a": "¡Sí! Registra varios miembros familiares en Configuración para gestionar las rutinas de cada persona por separado."
+      },
+      {
+        "q": "¿Funciona sin conexión?",
+        "a": "Sí, instálalo como PWA (Progressive Web App) para usarlo sin internet. Agrégalo a tu pantalla de inicio para usarlo como una app normal."
+      },
+      {
+        "q": "¿Qué pasa si pierdo mis datos?",
+        "a": "Puedes exportar archivos de respaldo desde Configuración > Gestión de datos. Los respaldos regulares garantizan la restauración segura de datos al cambiar de dispositivo o limpiar la caché del navegador."
+      },
+      {
+        "q": "¿Tiene función de notificaciones?",
+        "a": "Sí, puedes recibir recordatorios diarios de rutinas a la hora que prefieras. Configura la hora de notificación en la página de Configuración."
+      }
+    ],
+    "notesHeading": "Notas",
+    "notes": [
+      "Los datos se almacenan en el navegador (IndexedDB). Limpiar la caché puede eliminar datos — haz respaldos regularmente.",
+      "No se admite la sincronización automática entre dispositivos. Se puede hacer respaldo/restauración manual.",
+      "Funciona mejor en navegadores modernos (Chrome, Safari, Firefox, Edge)."
+    ],
+    "poweredBy": "soosoo.life"
   }
 }

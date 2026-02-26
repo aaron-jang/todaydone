@@ -1947,3 +1947,203 @@ html.dark-mode .routine-type-selector label:has(input[type="radio"]:checked) {
   color: var(--text-muted);
   text-align: right;
 }
+
+/* SEO Landing Section */
+.seo-landing {
+  border-top: 2px solid var(--border-color);
+  margin-top: 2rem;
+  padding: 2rem 0;
+  background: var(--bg-primary);
+}
+
+.seo-landing-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.seo-heading {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.seo-intro {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.seo-section {
+  margin-bottom: 1.5rem;
+}
+
+.seo-section h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.seo-problem-list {
+  list-style: none;
+  padding: 0;
+}
+
+.seo-problem-list li {
+  position: relative;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.seo-problem-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0.25rem;
+  color: var(--accent-blue);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.seo-howto-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: none;
+}
+
+.seo-howto-list li {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.seo-howto-list li strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.seo-howto-list li span {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.seo-faq-list {
+  margin: 0;
+  padding: 0;
+}
+
+.seo-faq-item {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.seo-faq-item dt {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  transition: background 0.2s ease;
+  user-select: none;
+}
+
+.seo-faq-item dt:hover {
+  background: var(--bg-tertiary);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 1.2rem;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+.seo-faq-item dd {
+  margin: 0;
+  padding: 0.75rem 1rem 0.75rem 2.7rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+}
+
+.seo-notes-list {
+  list-style: none;
+  padding: 0;
+}
+
+.seo-notes-list li {
+  position: relative;
+  padding: 0.4rem 0 0.4rem 1.5rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.seo-notes-list li::before {
+  content: '※';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.seo-footer-credit {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .seo-landing {
+    padding: 1.5rem 0;
+  }
+
+  .seo-heading {
+    font-size: 1.2rem;
+  }
+
+  .seo-section h3 {
+    font-size: 1rem;
+  }
+
+  .seo-howto-list li {
+    padding: 0.6rem;
+  }
+
+  .seo-faq-item dt {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .seo-faq-item dd {
+    padding: 0.6rem 0.75rem 0.6rem 2.2rem;
+    font-size: 0.85rem;
+  }
+}

@@ -5,6 +5,7 @@ import Today from './pages/Today';
 import Routines from './pages/Routines';
 import History from './pages/History';
 import Settings from './pages/Settings';
+import SeoLanding from './pages/SeoLanding';
 import {
   getNotificationSettings,
   shouldShowNotification,
@@ -130,6 +131,8 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
+
+      <SeoLanding />
     </div>
   );
 }
